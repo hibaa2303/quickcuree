@@ -1,0 +1,193 @@
+/* src/components/HomePage.css */
+
+.page {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 20px;
+    max-width: 1500px;
+    margin-top:150px;
+  }
+
+
+
+
+
+  .lab-test-banner {
+    display: flex;
+    align-items: center;
+    background-color: #f7f7f7;
+    padding: 40px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .carousell {
+    flex: 1;
+    max-width: 40%;
+  }
+  
+  .carousel-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .banner-content {
+    flex: 1;
+    padding-left: 20px;
+  }
+  
+  .banner-content h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .banner-content p {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 20px;
+  }
+  
+  .features {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .feature-item {
+    text-align: center;
+  }
+  
+  .feature-item i {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+  }
+  
+  .feature-item span {
+    font-size: 1.0rem;
+    color: #555;
+    margin-right:10px;
+  }
+  
+  .view-packages-button {
+    background-color: #ff6f61;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left:300px;
+    
+  }
+  .view-packages-button:hover {
+    background-color: #e64a19;
+  }
+
+  
+
+
+
+  
+  .popular-tests, .popular-health-checkups {
+    margin-bottom: 60px;
+    margin-top:50px;
+  }
+  
+  .popular-tests h2, .popular-health-checkups h2 {
+    font-size: 24px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  
+  .tests-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .tests-column {
+    width: 48%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tests-column h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .tests-column ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    line-height: 1.8;
+    font-size: 14px;
+  }
+  
+  .popular-health-checkups .checkups-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .checkup-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    text-align: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .checkup-card h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .checkup-card p {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .checkup-card .price {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 20px 0;
+  }
+  
+  .old-price {
+    text-decoration: line-through;
+    color: #888;
+    margin-left: 5px;
+  }
+  
+  .discount {
+    color: #ff5722;
+    font-size: 14px;
+  }
+  
+  .add-to-cart-btn {
+    padding: 10px 20px;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #e64a19;
+  }
+
+
+
+
+
+  
+  

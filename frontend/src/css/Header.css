@@ -1,0 +1,173 @@
+.navbar{
+    justify-content: space-evenly;
+    background-color: rgb(160, 206, 252);
+}
+.navbar h3, /* For Medicines, Cancer Care, Lab Tests, Consult Doctor */
+.navbar .ooo, /* For Login and Signup */
+.navbar button, /* For Cart button */
+.navbar p { /* For About Us */
+    cursor: pointer;
+}
+
+
+    
+.logo{
+  width: 175px;
+ 
+}
+.secondnav{
+    justify-content: space-evenly;
+    background-color: rgb(179, 214, 244);
+}
+
+.thirdnav{
+    display: flex;
+    justify-content: space-between;
+    border-color: black;
+    background-color:rgb(163, 206, 224);
+    margin-bottom: 5px;
+}
+#dropdown-basic{
+    background-color: rgb(163, 206, 224);
+    color:black;
+    border: 0px;
+}
+.search{
+    border-left: 9px;
+    background-color: #f1f4f6;
+  }
+.aaaa{
+    background-color: rgb(233, 189, 29);
+}
+.ooo{
+    background-color: rgb(160, 206, 252) ;
+    margin-top:13px;
+    font-weight:bolder;
+    font-size:18px;
+
+}
+.buttonn{
+    background-color: rgb(160, 206, 252);
+}
+.full{
+    position: fixed;
+    width :100%;
+   top:0px;
+   height :60px;
+   z-index:1030;
+
+}
+.fulll{
+    margin-top:175px;
+}
+.ef::-webkit-scrollbar {
+    display: none;
+  }
+ .sign {
+    margin-top :200px;
+ }     
+   
+.log{
+    margin-top :170px;
+}
+.cart{
+    margin-top:100px;
+}
+
+
+.navbar1{
+    background-color: rgb(252, 235, 220);
+    text-align: center;
+    justify-content: center;
+    margin-top:200px;
+    
+
+}
+.img{
+  width: 130px;
+    height: 70px;
+}
+.imgg{
+    width: 270px;
+    height: 250px;
+}
+.immg{
+    width:600px;
+    height: 80px;
+}
+.navbar2{
+    background-color: rgb(241, 237, 237);
+    text-align: center;
+    justify-content: center;
+}
+.icon{
+    width: 200px;
+}
+.icon1{
+    width:130px;
+    padding-top: 40px;
+    padding-bottom: 30px;  
+}
+.icon2{
+    width: 120px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+   
+
+}
+.icon3{
+    width: 120px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    
+
+}
+.navbar3{
+    background-color: #d4dfe1;
+}
+.cancer{
+    width: 100%;
+}
+
+.navbar4{
+   background-color:#fbeedd; 
+   width: 150px;
+
+}
+.navbar5{
+    background-color:#fbeedd; 
+    width: 150px; 
+}
+.caa{
+   
+    width: 100%;
+}
+.navbar6{
+    background-color: #b1e0db;
+}
+.navbar7{
+    background-color: #f2e08f;
+}
+.canc{
+    margin-top:175px;
+}
+
+
+
+.hihi{
+    margin-top:200px;
+}  
+
+
+
+
+.boo{
+    margin-top:200px;
+}
+
+
+
+.sea{
+    margin-top:200px;
+}
+
