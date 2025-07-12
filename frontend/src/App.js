@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Homepage from './Homepage';
 import Login from './Login';
 import Signup from './Signup';
@@ -16,28 +16,26 @@ import AboutUs from './AboutUs';
 import SearchResults from './SearchResults';
 
 function App() {
- 
-
   return (
     <div>
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/Homepage" element={<Homepage />} />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/Signup" element={<Signup />} />
-          <Route path="/Medicines" element={<Medicines />} />
-          <Route path="/Test" element={<Test />} />
-          <Route path="/Details" element={<Details />} />
-          <Route path="/Cart" element={<Cart />} />
-          <Route path="/Cartdetails" element={<Cartdetails />} />
-          <Route path="/Consult" element={<Consult />} />
-          <Route path="/Cancer" element={<Cancer />} />
-          <Route path="/Lab" element={<Lab />} />
+          <Route path="/" element={<Homepage />} /> {/* Default route */}
+          <Route path="/homepage" element={<Homepage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/medicines" element={<Medicines />} />
+          <Route path="/test" element={<Test />} />
+          <Route path="/details" element={<Details />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/cartdetails" element={<Cartdetails />} />
+          <Route path="/consult" element={<Consult />} />
+          <Route path="/cancer" element={<Cancer />} />
+          <Route path="/lab" element={<Lab />} />
           <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/search-results" element={<SearchResults />} />
-          
-
+         <Route path="/search-results" element={<SearchResults />} />
+          <Route path="*" element={<Navigate to="/" />} /> {/* Catch-all redirect */}
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,257 +1,378 @@
-// src/components/HomePage.js
 import React from 'react';
 import hi from './image/hi.png';
 import Footer from "./Footer";
 
 const Lab = () => {
+  // Define lab test data as an array of objects
+  const labTests = [
+    // First Section: Popular Health Checkups (Repeated)
+    {
+      name: "Comprehensive Gold Full Body",
+      tests: 88,
+      details: ["Serum Calcium", "Serum Iron Studies Basic (4)", "Vitamin Profile (3)"],
+      price: "₹1999",
+      oldPrice: "₹4498",
+      discount: "55% Off",
+      img: null, // Explicitly set to null
+    },
+    {
+      name: "Comprehensive Silver Full Body",
+      tests: 80,
+      details: ["Serum Calcium", "Serum Iron Studies Basic (4)", "Vitamin B12"],
+      price: "₹1599",
+      oldPrice: "₹3798",
+      discount: "57% Off",
+      img: null,
+    },
+    {
+      name: "Comprehensive Platinum Full Body",
+      tests: 101,
+      details: ["Serum Calcium", "Vitamin Profile (3)", "ESR (Erythrocyte Sedimentation Rate)"],
+      price: "₹3399",
+      oldPrice: "₹7498",
+      discount: "52% Off",
+      img: null,
+    },
+    // Second Section
+    {
+      name: "Basic Health Checkup",
+      tests: 50,
+      details: ["Serum Cholesterol", "Blood Glucose", "Thyroid Profile"],
+      price: "₹999",
+      oldPrice: "₹1998",
+      discount: "50% Off",
+      img: null,
+    },
+    {
+      name: "Advanced Health Checkup",
+      tests: 120,
+      details: ["Serum Creatinine", "Liver Function Test", "Kidney Function Test"],
+      price: "₹4499",
+      oldPrice: "₹8998",
+      discount: "50% Off",
+      img: null,
+    },
+    {
+      name: "Heart Care Checkup",
+      tests: 60,
+      details: ["ECG", "Lipid Profile", "Blood Pressure"],
+      price: "₹2999",
+      oldPrice: "₹5998",
+      discount: "50% Off",
+      img: null,
+    },
+    // Third Section
+    {
+      name: "Diabetes Care Checkup",
+      tests: 40,
+      details: ["HbA1c", "Fasting Blood Sugar", "Kidney Function Test"],
+      price: "₹2499",
+      oldPrice: "₹4998",
+      discount: "50% Off",
+      img: null,
+    },
+    {
+      name: "Women Wellness Checkup",
+      tests: 75,
+      details: ["Hormone Panel", "Bone Health", "Thyroid Profile"],
+      price: "₹3499",
+      oldPrice: "₹6998",
+      discount: "50% Off",
+      img: null,
+    },
+    {
+      name: "Senior Citizen Checkup",
+      tests: 90,
+      details: ["Heart Function", "Kidney Function", "Bone Health"],
+      price: "₹3999",
+      oldPrice: "₹7998",
+      discount: "50% Off",
+      img: null,
+    },
+    // Fourth Section (Repeated from First)
+    {
+      name: "Comprehensive Gold Full Body",
+      tests: 88,
+      details: ["Serum Calcium", "Serum Iron Studies Basic (4)", "Vitamin Profile (3)"],
+      price: "₹1999",
+      oldPrice: "₹4498",
+      discount: "55% Off",
+      img: null,
+    },
+    {
+      name: "Comprehensive Silver Full Body",
+      tests: 80,
+      details: ["Serum Calcium", "Serum Iron Studies Basic (4)", "Vitamin B12"],
+      price: "₹1599",
+      oldPrice: "₹3798",
+      discount: "57% Off",
+      img: null,
+    },
+    {
+      name: "Comprehensive Platinum Full Body",
+      tests: 101,
+      details: ["Serum Calcium", "Vitamin Profile (3)", "ESR (Erythrocyte Sedimentation Rate)"],
+      price: "₹3399",
+      oldPrice: "₹7498",
+      discount: "52% Off",
+      img: null,
+    },
+    // Fifth Section
+    {
+      name: "Kidney Health Checkup",
+      tests: 25,
+      details: ["Serum Creatinine", "Urea", "Electrolytes"],
+      price: "₹1299",
+      oldPrice: "₹2598",
+      discount: "50% Off",
+      img: null,
+    },
+    {
+      name: "Liver Health Checkup",
+      tests: 18,
+      details: ["Serum Bilirubin", "SGPT", "SGOT"],
+      price: "₹999",
+      oldPrice: "₹1998",
+      discount: "50% Off",
+      img: null,
+    },
+    {
+      name: "Thyroid Health Checkup",
+      tests: 10,
+      details: ["TSH", "T3", "T4"],
+      price: "₹799",
+      oldPrice: "₹1598",
+      discount: "50% Off",
+      img: null,
+    },
+    // Sixth Section
+    {
+      name: "Bone Health Checkup",
+      tests: 12,
+      details: ["Calcium", "Vitamin D", "Phosphate"],
+      price: "₹1499",
+      oldPrice: "₹2998",
+      discount: "50% Off",
+      img: null,
+    },
+    {
+      name: "Lung Health Checkup",
+      tests: 20,
+      details: ["Chest X-ray", "Pulmonary Function Test", "Sputum Test"],
+      price: "₹1999",
+      oldPrice: "₹3998",
+      discount: "50% Off",
+      img: null,
+    },
+    {
+      name: "Cardiac Health Checkup",
+      tests: 30,
+      details: ["ECG", "2D Echo", "Lipid Profile"],
+      price: "₹2499",
+      oldPrice: "₹4998",
+      discount: "50% Off",
+      img: null,
+    },
+  ];
 
-
+  // Function to handle adding a lab test to the cart
+  const handleAddToCart = (labTest) => {
+    try {
+      let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const index = cartItems.findIndex(item => item.name === labTest.name);
+      if (index !== -1) {
+        cartItems[index].quantity = (cartItems[index].quantity || 1) + 1;
+      } else {
+        cartItems.push({ ...labTest, quantity: 1, type: 'labTest' });
+      }
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      window.dispatchEvent(new Event('cartUpdated'));
+    } catch (error) {
+      console.error('Error adding lab test to cart:', error);
+    }
+  };
 
   return (
     <div className="page">
-
-<div className="lab-test-banner">
-      <div className="carousell w-100">
-        {/* Add your image URLs directly here */}
-        <img
-          src={hi}
-          alt="Lab Test"
-          className="carousel-image"
-        />
-      </div>
-      <div className="banner-content">
-        <h1>Lab Test From The Comfort Of Your Home</h1>
-        <p>Trusted by 40 Lakhs+ satisfied customers | 1 Crore+ lab tests booked</p>
-        <div className="features">
-          <div className="feature-item">
-            <i className="fas fa-shield-alt"></i>
-            <span>100% Safe & Hygienic</span>
-          </div>
-          <div className="feature-item">
-            <i className="fas fa-vial"></i>
-            <span>Home Sample Pick Up</span>
-          </div>
-          <div className="feature-item">
-            <i className="fas fa-file-medical-alt"></i>
-            <span>View Reports Online</span>
-          </div>
-          <div className="feature-item">
-            <i className="fas fa-user-md"></i>
-            <span>Free Doctor Consultation</span>
-          </div>
-          <div className="feature-item">
-            <i className="fas fa-percentage"></i>
-            <span>Best Prices Guaranteed</span>
-          </div>
+      <div className="lab-test-banner">
+        <div className="carousell w-100">
+          <img
+            src={hi}
+            alt="Lab Test"
+            className="carousel-image"
+          />
         </div>
-        <button className="view-packages-button">View Popular Packages</button>
+        <div className="banner-content">
+          <h1>Lab Test From The Comfort Of Your Home</h1>
+          <p>Trusted by 40 Lakhs+ satisfied customers | 1 Crore+ lab tests booked</p>
+          <div className="features">
+            <div className="feature-item">
+              <i className="fas fa-shield-alt"></i>
+              <span>100% Safe & Hygienic</span>
+            </div>
+            <div className="feature-item">
+              <i className="fas fa-vial"></i>
+              <span>Home Sample Pick Up</span>
+            </div>
+            <div className="feature-item">
+              <i className="fas fa-file-medical-alt"></i>
+              <span>View Reports Online</span>
+            </div>
+            <div className="feature-item">
+              <i className="fas fa-user-md"></i>
+              <span>Free Doctor Consultation</span>
+            </div>
+            <div className="feature-item">
+              <i className="fas fa-percentage"></i>
+              <span>Best Prices Guaranteed</span>
+            </div>
+          </div>
+          <button className="view-packages-button">View Popular Packages</button>
+        </div>
       </div>
-    </div>
-
-
-
 
       <section className="popular-health-checkups">
         <h2>Popular Health Checkups</h2>
         <div className="checkups-grid">
-          <div className="checkup-card">
-            <h3>Comprehensive Gold Full Body</h3>
-            <p>Includes 88 Tests</p>
-            <p>Serum Calcium</p>
-            <p>Serum Iron Studies Basic (4)</p>
-            <p>Vitamin Profile (3)</p>
-            <p className="price">₹1999 <span className="old-price">₹4498</span> <span className="discount">55% Off</span></p>
-            <button className="add-to-cart-btn">Add to Cart</button>
-          </div>
-          <div className="checkup-card">
-            <h3>Comprehensive Silver Full Body</h3>
-            <p>Includes 80 Tests</p>
-            <p>Serum Calcium</p>
-            <p>Serum Iron Studies Basic (4)</p>
-            <p>Vitamin B12</p>
-            <p className="price">₹1599 <span className="old-price">₹3798</span> <span className="discount">57% Off</span></p>
-            <button className="add-to-cart-btn">Add to Cart</button>
-          </div>
-          <div className="checkup-card">
-            <h3>Comprehensive Platinum Full Body</h3>
-            <p>Includes 101 Tests</p>
-            <p>Serum Calcium</p>
-            <p>Vitamin Profile (3)</p>
-            <p>ESR (Erythrocyte Sedimentation Rate)</p>
-            <p className="price">₹3399 <span className="old-price">₹7498</span> <span className="discount">52% Off</span></p>
-            <button className="add-to-cart-btn">Add to Cart</button>
-          </div>
+          {labTests.slice(0, 3).map((test, index) => (
+            <div key={index} className="checkup-card">
+              <h3>{test.name}</h3>
+              <p>Includes {test.tests} Tests</p>
+              {test.details.map((detail, i) => (
+                <p key={i}>{detail}</p>
+              ))}
+              <p className="price">
+                {test.price} <span className="old-price">{test.oldPrice}</span> <span className="discount">{test.discount}</span>
+              </p>
+              <button
+                className="add-to-cart-btn"
+                onClick={() => handleAddToCart(test)}
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
         </div>
-        </section>
+      </section>
 
-    <section className="popular-health-checkups">
+      <section className="popular-health-checkups">
         <div className="checkups-grid">
-    <div className="checkup-card">
-      <h3>Basic Health Checkup</h3>
-      <p>Includes 50 Tests</p>
-      <p>Serum Cholesterol</p>
-      <p>Blood Glucose</p>
-      <p>Thyroid Profile</p>
-      <p className="price">₹999 <span className="old-price">₹1998</span> <span className="discount">50% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-    <div className="checkup-card">
-      <h3>Advanced Health Checkup</h3>
-      <p>Includes 120 Tests</p>
-      <p>Serum Creatinine</p>
-      <p>Liver Function Test</p>
-      <p>Kidney Function Test</p>
-      <p className="price">₹4499 <span className="old-price">₹8998</span> <span className="discount">50% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-    <div className="checkup-card">
-      <h3>Heart Care Checkup</h3>
-      <p>Includes 60 Tests</p>
-      <p>ECG</p>
-      <p>Lipid Profile</p>
-      <p>Blood Pressure</p>
-      <p className="price">₹2999 <span className="old-price">₹5998</span> <span className="discount">50% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-    </div>
-    </section>
+          {labTests.slice(3, 6).map((test, index) => (
+            <div key={index} className="checkup-card">
+              <h3>{test.name}</h3>
+              <p>Includes {test.tests} Tests</p>
+              {test.details.map((detail, i) => (
+                <p key={i}>{detail}</p>
+              ))}
+              <p className="price">
+                {test.price} <span className="old-price">{test.oldPrice}</span> <span className="discount">{test.discount}</span>
+              </p>
+              <button
+                className="add-to-cart-btn"
+                onClick={() => handleAddToCart(test)}
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
 
-
-    <section className="popular-health-checkups">
+      <section className="popular-health-checkups">
         <div className="checkups-grid">
-    <div className="checkup-card">
-      <h3>Diabetes Care Checkup</h3>
-      <p>Includes 40 Tests</p>
-      <p>HbA1c</p>
-      <p>Fasting Blood Sugar</p>
-      <p>Kidney Function Test</p>
-      <p className="price">₹2499 <span className="old-price">₹4998</span> <span className="discount">50% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-    <div className="checkup-card">
-      <h3>Women Wellness Checkup</h3>
-      <p>Includes 75 Tests</p>
-      <p>Hormone Panel</p>
-      <p>Bone Health</p>
-      <p>Thyroid Profile</p>
-      <p className="price">₹3499 <span className="old-price">₹6998</span> <span className="discount">50% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-    <div className="checkup-card">
-      <h3>Senior Citizen Checkup</h3>
-      <p>Includes 90 Tests</p>
-      <p>Heart Function</p>
-      <p>Kidney Function</p>
-      <p>Bone Health</p>
-      <p className="price">₹3999 <span className="old-price">₹7998</span> <span className="discount">50% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-    </div>
-    </section>
+          {labTests.slice(6, 9).map((test, index) => (
+            <div key={index} className="checkup-card">
+              <h3>{test.name}</h3>
+              <p>Includes {test.tests} Tests</p>
+              {test.details.map((detail, i) => (
+                <p key={i}>{detail}</p>
+              ))}
+              <p className="price">
+                {test.price} <span className="old-price">{test.oldPrice}</span> <span className="discount">{test.discount}</span>
+              </p>
+              <button
+                className="add-to-cart-btn"
+                onClick={() => handleAddToCart(test)}
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
 
+      <section className="popular-health-checkups">
+        <div className="checkups-grid">
+          {labTests.slice(9, 12).map((test, index) => (
+            <div key={index} className="checkup-card">
+              <h3>{test.name}</h3>
+              <p>Includes {test.tests} Tests</p>
+              {test.details.map((detail, i) => (
+                <p key={i}>{detail}</p>
+              ))}
+              <p className="price">
+                {test.price} <span className="old-price">{test.oldPrice}</span> <span className="discount">{test.discount}</span>
+              </p>
+              <button
+                className="add-to-cart-btn"
+                onClick={() => handleAddToCart(test)}
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
 
-    <section className="popular-health-checkups">
-  <div className="checkups-grid">
-    <div className="checkup-card">
-      <h3>Comprehensive Gold Full Body</h3>
-      <p>Includes 88 Tests</p>
-      <p>Serum Calcium</p>
-      <p>Serum Iron Studies Basic (4)</p>
-      <p>Vitamin Profile (3)</p>
-      <p className="price">₹1999 <span className="old-price">₹4498</span> <span className="discount">55% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-    <div className="checkup-card">
-      <h3>Comprehensive Silver Full Body</h3>
-      <p>Includes 80 Tests</p>
-      <p>Serum Calcium</p>
-      <p>Serum Iron Studies Basic (4)</p>
-      <p>Vitamin B12</p>
-      <p className="price">₹1599 <span className="old-price">₹3798</span> <span className="discount">57% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-    <div className="checkup-card">
-      <h3>Comprehensive Platinum Full Body</h3>
-      <p>Includes 101 Tests</p>
-      <p>Serum Calcium</p>
-      <p>Vitamin Profile (3)</p>
-      <p>ESR (Erythrocyte Sedimentation Rate)</p>
-      <p className="price">₹3399 <span className="old-price">₹7498</span> <span className="discount">52% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-    </div></section>
+      <section className="popular-health-checkups">
+        <div className="checkups-grid">
+          {labTests.slice(12, 15).map((test, index) => (
+            <div key={index} className="checkup-card">
+              <h3>{test.name}</h3>
+              <p>Includes {test.tests} Tests</p>
+              {test.details.map((detail, i) => (
+                <p key={i}>{detail}</p>
+              ))}
+              <p className="price">
+                {test.price} <span className="old-price">{test.oldPrice}</span> <span className="discount">{test.discount}</span>
+              </p>
+              <button
+                className="add-to-cart-btn"
+                onClick={() => handleAddToCart(test)}
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
 
-    {/* Additional 6 Unique Health Checkup Cards */}
-    <section className="popular-health-checkups">
-    <div className="checkups-grid">
-    <div className="checkup-card">
-      <h3>Kidney Health Checkup</h3>
-      <p>Includes 25 Tests</p>
-      <p>Serum Creatinine</p>
-      <p>Urea</p>
-      <p>Electrolytes</p>
-      <p className="price">₹1299 <span className="old-price">₹2598</span> <span className="discount">50% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-    <div className="checkup-card">
-      <h3>Liver Health Checkup</h3>
-      <p>Includes 18 Tests</p>
-      <p>Serum Bilirubin</p>
-      <p>SGPT</p>
-      <p>SGOT</p>
-      <p className="price">₹999 <span className="old-price">₹1998</span> <span className="discount">50% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-    <div className="checkup-card">
-      <h3>Thyroid Health Checkup</h3>
-      <p>Includes 10 Tests</p>
-      <p>TSH</p>
-      <p>T3</p>
-      <p>T4</p>
-      <p className="price">₹799 <span className="old-price">₹1598</span> <span className="discount">50% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-    </div>
-    </section>
+      <section className="popular-health-checkups">
+        <div className="checkups-grid">
+          {labTests.slice(15, 18).map((test, index) => (
+            <div key={index} className="checkup-card">
+              <h3>{test.name}</h3>
+              <p>Includes {test.tests} Tests</p>
+              {test.details.map((detail, i) => (
+                <p key={i}>{detail}</p>
+              ))}
+              <p className="price">
+                {test.price} <span className="old-price">{test.oldPrice}</span> <span className="discount">{test.discount}</span>
+              </p>
+              <button
+                className="add-to-cart-btn"
+                onClick={() => handleAddToCart(test)}
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
 
-    <section className="popular-health-checkups">
-    <div className="checkups-grid">
-    <div className="checkup-card">
-      <h3>Bone Health Checkup</h3>
-      <p>Includes 12 Tests</p>
-      <p>Calcium</p>
-      <p>Vitamin D</p>
-      <p>Phosphate</p>
-      <p className="price">₹1499 <span className="old-price">₹2998</span> <span className="discount">50% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
+      <Footer />
     </div>
-    <div className="checkup-card">
-      <h3>Lung Health Checkup</h3>
-      <p>Includes 20 Tests</p>
-      <p>Chest X-ray</p>
-      <p>Pulmonary Function Test</p>
-      <p>Sputum Test</p>
-      <p className="price">₹1999 <span className="old-price">₹3998</span> <span className="discount">50% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-    <div className="checkup-card">
-      <h3>Cardiac Health Checkup</h3>
-      <p>Includes 30 Tests</p>
-      <p>ECG</p>
-      <p>2D Echo</p>
-      <p>Lipid Profile</p>
-      <p className="price">₹2499 <span className="old-price">₹4998</span> <span className="discount">50% Off</span></p>
-      <button className="add-to-cart-btn">Add to Cart</button>
-    </div>
-  </div>
-</section>
-
-    <Footer/>
-</div>
-
-
   );
 };
 
 export default Lab;
-
