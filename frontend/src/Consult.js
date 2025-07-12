@@ -4,7 +4,7 @@ import doc from './image/doc.png'
 import online from './image/online.png'
 import pop1 from './image/pop1.jpg'
 import Carousel from 'react-bootstrap/Carousel';
-import { CarouselItem, ModalBody, ModalDialog, ModalFooter} from 'react-bootstrap';
+import { CarouselItem} from 'react-bootstrap';
 import confi from './image/confi.jpg'
 import certi  from './image/certi.png'
 import convi from './image/convi.png'

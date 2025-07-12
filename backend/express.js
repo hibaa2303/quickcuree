@@ -1,188 +1,204 @@
 require('dotenv').config();
-
 const express = require('express');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const app = express();
-const PORT = 3000;
+const bcrypt = require('bcrypt');
+const path = require('path');
 
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-app.use(cors());
-
+app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 const uri = process.env.MONGODB_URI;
-const GEOCODING_API_KEY = '20f20d4537e04235a2a66ec1008db66d';
-const GEOCODING_API_URL = 'https://opencagedata.com/';
 if (!uri) {
-  console.error('MongoDB URI is not defined. Please check your environment variables.');
+  console.error('MongoDB URI is not defined.');
   process.exit(1);
 }
 
-
-const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
+const client = new MongoClient(uri);
 let db;
 
+async function connectWithRetry() {
+  for (let i = 0; i < 5; i++) {
+    try {
+      await client.connect();
+      console.log('Connected to MongoDB');
+      db = client.db('quickcure');
+      return;
+    } catch (err) {
+      console.error(`MongoDB connection attempt ${i + 1} failed:`, err);
+      if (i === 4) {
+        console.error('Max retries reached. Exiting...');
+        process.exit(1);
+      }
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  }
+}
 
-client.connect()
-  .then(() => {
-    console.log('Connected successfully to MongoDB');
-    db = client.db('quickcure'); 
-  })
-  .catch(err => {
-    console.error('Failed to connect to MongoDB', err);
-    process.exit(1); 
-  });
+connectWithRetry();
 
+// Middleware for error handling
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  res.status(500).json({ status: 'error', message: 'Internal Server Error' });
+});
 
-app.post('/login', async (req, res) => {
+// Login
+app.post('/login', async (req, res, next) => {
   const { email, password } = req.body;
-
   try {
-
-    const result = await db.collection('login').insertOne({ email, password });
-
-   
-    if (result.insertedId) {
-      res.json({ status: "success", data: { id: result.insertedId, email } });
+    const user = await db.collection('signup').findOne({ email });
+    if (user && await bcrypt.compare(password, user.password)) {
+      res.json({
+        status: 'success',
+        data: {
+          id: user._id.toString(), // Ensure ID is a string
+          email: user.email,
+          firstName: user.fname, // Rename 'name' to 'firstName'
+          username: user.username || user.email.split('@')[0], // Add username, fallback to email prefix
+        },
+      });
     } else {
-      res.json({ status: "fail", message: "Failed to insert user" });
+      res.status(401).json({
+        status: 'error', // Change 'fail' to 'error'
+        message: 'Invalid email or password',
+      });
     }
   } catch (error) {
-    console.error('Error during user login:', error);
-    res.status(500).json({ status: "error", message: "Internal Server Error" });
+    next(error);
   }
 });
 
-app.post('/signup', async (req, res) => {
+// Signup
+
+
+app.post('/signup', async (req, res, next) => {
   const { fname, email, password } = req.body;
-
   try {
-    const user = await db.collection('signup').insertOne({ fname, email, password });
-    res.json({ status: 'success', data: user });
+    const existingUser = await db.collection('signup').findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ status: 'fail', message: 'User already exists' });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const result = await db.collection('signup').insertOne({ fname, email, password: hashedPassword });
+    res.json({ status: 'success', data: { id: result.insertedId, email, fname } });
   } catch (error) {
-    console.error('Error during account creation:', error);
-    res.status(500).json({ status: 'error', message: 'Internal Server Error' });
+    next(error);
   }
 });
 
-app.get('/medicines', async (req, res) => {
+// Get Medicines
+app.get('/medicines', async (req, res, next) => {
   try {
-    const medicines = await db.collection('a to z').find({}).toArray();
+    const { category } = req.query;
+    console.log('Category:', category);
+    const query = category ? { category: category.toLowerCase() } : {};
+    console.log('Query:', query);
+    const medicines = await db.collection('tablets').find(query).toArray();
+    console.log('Medicines:', medicines);
+    res.json({ status: 'success', data: medicines });
+  } catch (error) {
+    next(error);
+  }
+});
 
-    if (medicines.length > 0) {
-      res.json({ status: 'success', data: medicines });
+// Get Medicine by ID
+app.get('/medicines/:id', async (req, res, next) => {
+  try {
+    const medicine = await db.collection('tablets').findOne({ _id: new ObjectId(req.params.id) });
+    if (medicine) {
+      res.json({ status: 'success', data: medicine });
     } else {
-      res.json({ status: 'fail', message: 'No medicines found' });
+      res.status(404).json({ status: 'fail', message: 'Medicine not found' });
     }
   } catch (error) {
-    console.error('Error fetching medicines:', error);
-    res.status(500).json({ status: 'error', message: 'Internal Server Error' });
+    next(error);
   }
 });
 
-
-app.get('/search', async (req, res) => {
+// Search Medicines
+app.get('/search', async (req, res, next) => {
   const { keyword } = req.query;
-
-  // Log the keyword received from the frontend
-  console.log('Search keyword:', keyword);
-
   if (!keyword) {
-    return res.status(400).json({ status: 'fail', message: 'Keyword is required for search' });
+    return res.status(400).json({ status: 'fail', message: 'Keyword is required' });
   }
-
   try {
-    // Perform the search in the 'a to z' collection
-    const searchResults = await db.collection('a to z').find({
-      name: new RegExp(keyword, 'i') // 'i' for case-insensitive
+    const searchResults = await db.collection('tablets').find({
+      name: new RegExp(keyword.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'), 'i')
     }).toArray();
-
-    // Log the results found in the database
-    console.log('Search results:', searchResults);
-
-    if (searchResults.length > 0) {
-      res.json({ status: 'success', items: searchResults });
-    } else {
-      res.json({ status: 'fail', message: 'No items found matching your search' });
-    }
+    res.json({ status: 'success', items: searchResults });
   } catch (error) {
-    console.error('Error fetching search results:', error);
-    res.status(500).json({ status: 'error', message: 'Internal Server Error' });
+    next(error);
   }
+});
+app.get('/autocomplete', (req, res) => {
+  const keyword = req.query.keyword?.toLowerCase();
+  if (!keyword) {
+    return res.json({ status: 'success', suggestions: [] });
+  }
+  const suggestions = medicines
+    .filter(med => med.name.toLowerCase().includes(keyword))
+    .map(med => med.name)
+    .slice(0, 5); // Limit to 5 suggestions
+  res.json({ status: 'success', suggestions });
 });
 
 // Add Membership
-app.post('/add-membership', async (req, res) => {
+app.post('/add-membership', async (req, res, next) => {
   const { userId } = req.body;
-
   try {
     const result = await db.collection('memberships').updateOne(
-      { userId }, 
-      { $set: { membershipActive: true } }, 
-      { upsert: true } // Create if not exists
+      { userId },
+      { $set: { membershipActive: true } },
+      { upsert: true }
     );
-    if (result.modifiedCount > 0 || result.upsertedCount > 0) {
-      res.json({ status: 'success', message: 'Membership added successfully!' });
-    } else {
-      res.json({ status: 'fail', message: 'Failed to add membership' });
-    }
+    res.json({ status: 'success', message: 'Membership added successfully!' });
   } catch (error) {
-    console.error('Error during adding membership:', error);
-    res.status(500).json({ status: 'error', message: 'Internal Server Error' });
+    next(error);
   }
 });
 
 // Add Address
-app.post('/add-address', async (req, res) => {
+app.post('/add-address', async (req, res, next) => {
   const { userId, address } = req.body;
-
   try {
     const result = await db.collection('addresses').updateOne(
       { userId },
-      { $push: { addresses: address } }, 
-      { upsert: true } // Create if not exists
+      { $push: { addresses: address } },
+      { upsert: true }
     );
-    if (result.modifiedCount > 0 || result.upsertedCount > 0) {
-      res.json({ status: 'success', message: 'Address added successfully!' });
-    } else {
-      res.json({ status: 'fail', message: 'Failed to add address' });
-    }
+    res.json({ status: 'success', message: 'Address added successfully!' });
   } catch (error) {
-    console.error('Error during adding address:', error);
-    res.status(500).json({ status: 'error', message: 'Internal Server Error' });
+    next(error);
   }
 });
 
-// Proceed to Payment
-app.post('/checkout', async (req, res) => {
+// Checkout
+app.post('/checkout', async (req, res, next) => {
   const { userId, cartDetails } = req.body;
-  
-  // Calculate total cost
-  const totalAmount = cartDetails.reduce((sum, item) => sum + item.price, 0);
-
   try {
-    // Simulate payment initiation
+    const totalAmount = cartDetails.reduce((sum, item) => sum + item.price, 0);
     res.json({
       status: 'success',
       message: 'Proceeding to payment...',
       totalAmount,
-      paymentLink: 'https://payment-gateway-url.com' // Simulated payment link
+      paymentLink: 'https://payment-gateway-url.com'
     });
   } catch (error) {
-    console.error('Error during checkout:', error);
-    res.status(500).json({ status: 'error', message: 'Internal Server Error' });
+    next(error);
   }
 });
 
+// Catch-all route to serve index.html for client-side routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+});
 
-
-// Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:3000`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
