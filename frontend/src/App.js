@@ -14,6 +14,8 @@ import Cancer from './Cancer';
 import Lab from './Lab';
 import AboutUs from './AboutUs';
 import SearchResults from './SearchResults';
+import Orders from './Orders';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   return (
@@ -28,8 +30,11 @@ function App() {
           <Route path="/medicines" element={<Medicines />} />
           <Route path="/test" element={<Test />} />
           <Route path="/details" element={<Details />} />
+          <Route path="/details/:id" element={<Details />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/cartdetails" element={<Cartdetails />} />
+          <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+          <Route path="/orders/:id" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
           <Route path="/consult" element={<Consult />} />
           <Route path="/cancer" element={<Cancer />} />
           <Route path="/lab" element={<Lab />} />

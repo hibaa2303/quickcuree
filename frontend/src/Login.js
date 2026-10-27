@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import Carousel from 'react-bootstrap/Carousel';
 import { CarouselItem } from 'react-bootstrap';
@@ -11,9 +11,13 @@ import s5 from './image/s5.png';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './css/Forms.css';
+import { API_BASE_URL } from './api';
+import { moveCart, moveMembershipSelection } from './cartStorage';
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSignupRedirect = () => {
     navigate('/signup');
@@ -22,14 +26,16 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const LoginUser = async (e) => {
     e.preventDefault();
     setError(null);
 
     try {
-      const response = await axios.post('http://localhost:3000/login', {
-        email,
+      setIsSubmitting(true);
+      const response = await axios.post(`${API_BASE_URL}/login`, {
+        email: email.trim().toLowerCase(),
         password,
       });
 
@@ -39,18 +45,44 @@ function Login() {
           username: response.data.data.username,
           firstName: response.data.data.firstName || response.data.data.username,
         };
+        const intendedLocation = location.state?.from;
+        const targetPath = typeof intendedLocation?.pathname === 'string'
+          && intendedLocation.pathname.startsWith('/')
+          && !intendedLocation.pathname.startsWith('//')
+          && intendedLocation.pathname !== '/login'
+          ? `${intendedLocation.pathname}${intendedLocation.search || ''}${intendedLocation.hash || ''}`
+          : '/homepage';
+        const hasCartSource = location.state?.resumeCheckout === true
+          && Object.prototype.hasOwnProperty.call(location.state, 'cartOwnerId');
+
+        if (hasCartSource) {
+          try {
+            moveCart(location.state.cartOwnerId ?? null, String(userData.id));
+            moveMembershipSelection(location.state.cartOwnerId ?? null, String(userData.id));
+          } catch (storageError) {
+            setError('Login succeeded, but your cart could not be transferred. Your original cart is still saved; please check browser storage and try again.');
+            return;
+          }
+        }
         localStorage.setItem('user', JSON.stringify(userData));
+        localStorage.setItem('token', response.data.data.token);
         window.dispatchEvent(new Event('userUpdated')); // Trigger user update
+        window.dispatchEvent(new Event('cartUpdated'));
         toast.success('Login successful!');
-        navigate('/homepage');
+        navigate(targetPath, { replace: true });
       } else {
         setError('Invalid Email or Password');
         toast.error('Invalid Email or Password');
       }
     } catch (error) {
       console.error('There was an error logging in!', error);
-      setError('An error occurred during login. Please try again.');
-      toast.error('An error occurred during login. Please try again.');
+      const message = error.response?.status === 401
+        ? 'Invalid email or password.'
+        : 'Unable to log in right now. Please try again.';
+      setError(message);
+      toast.error(message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -63,9 +95,9 @@ function Login() {
   ];
 
   return (
-    <div className="log container center p-4 w-5">
-      <div className="col d-flex">
-        <div className="rounded mt-2 mb-2 p-3 w-50 border">
+    <div className="auth-page log login-page">
+      <div className="auth-layout">
+        <div className="auth-intro rounded mt-2 mb-2 p-3 border">
           <Carousel>
             {imageSources.map((image, index) => (
               <CarouselItem key={index}>
@@ -92,7 +124,7 @@ function Login() {
                       {index === 1 && 'Get medicine information, order medicines, book lab tests, and consult doctors online from the comfort of your home.'}
                       {index === 2 && "Order any medicines or health product and we'll deliver it for free. Enjoy discounts on everything."}
                       {index === 3 && "Book any test from any lab. We'll collect the sample and send the reports. Save up to 80% every time."}
-                      {index === 4 && 'Consult our certified doctors from anywhere, anytime, and for free. We guarantee your privacy.'}
+                      {index === 4 && 'Explore QuickCure’s consultation information. Appointment requests are not connected yet.'}
                     </p>
                   </div>
                 </div>
@@ -101,7 +133,7 @@ function Login() {
           </Carousel>
         </div>
 
-        <div className="rounded mt-2 mb-2 p-3 border">
+        <div className="auth-form rounded mt-2 mb-2 p-3 border">
           <h3 className="login mt-4 text-center">Login</h3>
           <p className="first mb-5">
             Get access to your orders, lab tests & doctor consultations
@@ -110,38 +142,45 @@ function Login() {
           {error && (
             <p className="text-danger text-center mb-3">{error}</p>
           )}
+          {!error && location.state?.authMessage && (
+            <p className="text-danger text-center mb-3" role="status">{location.state.authMessage}</p>
+          )}
 
           <form onSubmit={LoginUser}>
-            <h6 className="second mb-1 ms-5 fw-bold">Enter Email ID or Mobile Number</h6>
+            <label htmlFor="login-email" className="second mb-1 fw-bold">Email</label>
             <input
+              id="login-email"
               type="email"
+              autoComplete="email"
+              maxLength={254}
               onChange={(e) => setEmail(e.target.value)}
               name="email"
-              id="email"
               placeholder="Enter your email"
-              className="form-control ms-5 w-75 mb-3"
+              className="form-control mb-3"
               value={email}
               required
             />
 
-            <h6 className="second ms-5 mb-1 fw-bold">Password</h6>
+            <label htmlFor="login-password" className="second mb-1 fw-bold">Password</label>
             <input
+              id="login-password"
               type="password"
+              autoComplete="current-password"
+              maxLength={128}
               onChange={(e) => setPassword(e.target.value)}
-              id="password"
               placeholder="Enter your Password"
-              className="form-control ms-5 w-75 mb-3 me-5"
+              className="form-control mb-3"
               value={password}
               required
             />
 
-            <button type="submit" className="btn btn-info w-75 ms-5 mt-5 mb-5">
-              LOGIN
+            <button type="submit" className="btn btn-info auth-submit mt-3 mb-3" disabled={isSubmitting}>
+              {isSubmitting ? 'Logging in…' : 'LOGIN'}
             </button>
           </form>
 
           <div className="red d-flex justify-content-center">
-            <h6 className="mr-1">New on 1mg?</h6>
+            <h6 className="mr-1">New to QuickCure?</h6>
             <h6
               className="text-danger ms-1"
               onClick={handleSignupRedirect}
@@ -150,14 +189,7 @@ function Login() {
               Sign Up
             </h6>
           </div>
-          <p className="text-center p-2">
-            By logging in, you agree to our
-            <div className="space">
-              <a href="#">Terms and Conditions</a>
-              <p>&</p>
-              <a href="#">Privacy Policy</a>
-            </div>
-          </p>
+          <p className="text-center p-2 auth-note">By logging in, you agree to our Terms and Conditions &amp; Privacy Policy.</p>
           <p className="text-center text-danger">Need Help? Get In Touch</p>
         </div>
       </div>

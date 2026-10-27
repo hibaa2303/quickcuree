@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import hi from './image/hi.png';
 import Footer from "./Footer";
+import './css/Lab.css';
+import { addCartItem } from './cartStorage';
+import { getLabProductId } from './labProductId';
 
 const Lab = () => {
   // Define lab test data as an array of objects
@@ -175,25 +178,25 @@ const Lab = () => {
     },
   ];
 
-  // Function to handle adding a lab test to the cart
+  const packagesRef = useRef(null);
+  const [cartMessage, setCartMessage] = useState('');
+  const uniqueLabTests = labTests.filter(
+    (test, index, allTests) => allTests.findIndex((candidate) => candidate.name === test.name) === index
+  );
+
+  // Package selections stay in the browser cart; this page does not create bookings.
   const handleAddToCart = (labTest) => {
     try {
-      let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-      const index = cartItems.findIndex(item => item.name === labTest.name);
-      if (index !== -1) {
-        cartItems[index].quantity = (cartItems[index].quantity || 1) + 1;
-      } else {
-        cartItems.push({ ...labTest, quantity: 1, type: 'labTest' });
-      }
-      localStorage.setItem('cartItems', JSON.stringify(cartItems));
-      window.dispatchEvent(new Event('cartUpdated'));
+      addCartItem({ ...labTest, _id: getLabProductId(labTest.name), type: 'labTest' });
+      setCartMessage(`${labTest.name} added to your cart. This does not create a booking.`);
     } catch (error) {
       console.error('Error adding lab test to cart:', error);
+      setCartMessage('Unable to update your cart. Please try again.');
     }
   };
 
   return (
-    <div className="page">
+    <div className="page lab-page">
       <div className="lab-test-banner">
         <div className="carousell w-100">
           <img
@@ -204,38 +207,30 @@ const Lab = () => {
         </div>
         <div className="banner-content">
           <h1>Lab Test From The Comfort Of Your Home</h1>
-          <p>Trusted by 40 Lakhs+ satisfied customers | 1 Crore+ lab tests booked</p>
+          <p>Browse the sample health checkup packages available in this demo.</p>
           <div className="features">
             <div className="feature-item">
-              <i className="fas fa-shield-alt"></i>
-              <span>100% Safe & Hygienic</span>
+              <span>Package details and prices</span>
             </div>
             <div className="feature-item">
-              <i className="fas fa-vial"></i>
-              <span>Home Sample Pick Up</span>
+              <span>Add selections to your cart</span>
             </div>
             <div className="feature-item">
-              <i className="fas fa-file-medical-alt"></i>
-              <span>View Reports Online</span>
-            </div>
-            <div className="feature-item">
-              <i className="fas fa-user-md"></i>
-              <span>Free Doctor Consultation</span>
-            </div>
-            <div className="feature-item">
-              <i className="fas fa-percentage"></i>
-              <span>Best Prices Guaranteed</span>
+              <span>Booking is not connected</span>
             </div>
           </div>
-          <button className="view-packages-button">View Popular Packages</button>
+          <button className="view-packages-button" type="button" onClick={() => packagesRef.current?.scrollIntoView({ behavior: 'smooth' })}>
+            View Popular Packages
+          </button>
+          <p className="lab-demo-note">Adding a package to your cart does not book a test. Online booking is not connected yet.</p>
         </div>
       </div>
 
-      <section className="popular-health-checkups">
+      <section className="popular-health-checkups" ref={packagesRef}>
         <h2>Popular Health Checkups</h2>
         <div className="checkups-grid">
-          {labTests.slice(0, 3).map((test, index) => (
-            <div key={index} className="checkup-card">
+          {uniqueLabTests.slice(0, 3).map((test) => (
+            <div key={test.name} className="checkup-card">
               <h3>{test.name}</h3>
               <p>Includes {test.tests} Tests</p>
               {test.details.map((detail, i) => (
@@ -256,9 +251,10 @@ const Lab = () => {
       </section>
 
       <section className="popular-health-checkups">
+        <h2>More Health Checkups</h2>
         <div className="checkups-grid">
-          {labTests.slice(3, 6).map((test, index) => (
-            <div key={index} className="checkup-card">
+          {uniqueLabTests.slice(3).map((test) => (
+            <div key={test.name} className="checkup-card">
               <h3>{test.name}</h3>
               <p>Includes {test.tests} Tests</p>
               {test.details.map((detail, i) => (
@@ -278,97 +274,7 @@ const Lab = () => {
         </div>
       </section>
 
-      <section className="popular-health-checkups">
-        <div className="checkups-grid">
-          {labTests.slice(6, 9).map((test, index) => (
-            <div key={index} className="checkup-card">
-              <h3>{test.name}</h3>
-              <p>Includes {test.tests} Tests</p>
-              {test.details.map((detail, i) => (
-                <p key={i}>{detail}</p>
-              ))}
-              <p className="price">
-                {test.price} <span className="old-price">{test.oldPrice}</span> <span className="discount">{test.discount}</span>
-              </p>
-              <button
-                className="add-to-cart-btn"
-                onClick={() => handleAddToCart(test)}
-              >
-                Add to Cart
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="popular-health-checkups">
-        <div className="checkups-grid">
-          {labTests.slice(9, 12).map((test, index) => (
-            <div key={index} className="checkup-card">
-              <h3>{test.name}</h3>
-              <p>Includes {test.tests} Tests</p>
-              {test.details.map((detail, i) => (
-                <p key={i}>{detail}</p>
-              ))}
-              <p className="price">
-                {test.price} <span className="old-price">{test.oldPrice}</span> <span className="discount">{test.discount}</span>
-              </p>
-              <button
-                className="add-to-cart-btn"
-                onClick={() => handleAddToCart(test)}
-              >
-                Add to Cart
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="popular-health-checkups">
-        <div className="checkups-grid">
-          {labTests.slice(12, 15).map((test, index) => (
-            <div key={index} className="checkup-card">
-              <h3>{test.name}</h3>
-              <p>Includes {test.tests} Tests</p>
-              {test.details.map((detail, i) => (
-                <p key={i}>{detail}</p>
-              ))}
-              <p className="price">
-                {test.price} <span className="old-price">{test.oldPrice}</span> <span className="discount">{test.discount}</span>
-              </p>
-              <button
-                className="add-to-cart-btn"
-                onClick={() => handleAddToCart(test)}
-              >
-                Add to Cart
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="popular-health-checkups">
-        <div className="checkups-grid">
-          {labTests.slice(15, 18).map((test, index) => (
-            <div key={index} className="checkup-card">
-              <h3>{test.name}</h3>
-              <p>Includes {test.tests} Tests</p>
-              {test.details.map((detail, i) => (
-                <p key={i}>{detail}</p>
-              ))}
-              <p className="price">
-                {test.price} <span className="old-price">{test.oldPrice}</span> <span className="discount">{test.discount}</span>
-              </p>
-              <button
-                className="add-to-cart-btn"
-                onClick={() => handleAddToCart(test)}
-              >
-                Add to Cart
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
+      <p className="lab-cart-message" role="status" aria-live="polite">{cartMessage}</p>
 
       <Footer />
     </div>

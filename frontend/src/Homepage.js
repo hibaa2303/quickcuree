@@ -18,48 +18,39 @@ import { useNavigate } from 'react-router-dom';
 function Homepage() {
   const navigate = useNavigate();
 
-  const List = async () => {
-    window.location.replace("/list");
-  };
-
-  const Test = async () => {
-    window.location.replace("/test");
-  };
-
-  const Medicines = async () => {
-    window.location.replace("/medicines");
-  };
+  const List = () => navigate('/medicines');
+  const Test = () => navigate('/test');
 
   return (
-    <div className="fulll">
+    <div className="fulll homepage-content">
       <div className="first d-flex mt-0">
         <Carousel>
           <CarouselItem>
-            <img className="image" alt="homeimages" src={img1} />
+            <img className="image" alt="QuickCure healthcare promotion" src={img1} />
           </CarouselItem>
           <CarouselItem>
-            <img className="image" alt="homeimages" src={img2} />
+            <img className="image" alt="QuickCure healthcare promotion" src={img2} />
           </CarouselItem>
           <CarouselItem>
-            <img className="image" alt="homeimages" src={img3} />
+            <img className="image" alt="QuickCure healthcare promotion" src={img3} />
           </CarouselItem>
           <CarouselItem>
-            <img className="image" alt="homeimages" src={img4} />
+            <img className="image" alt="QuickCure healthcare promotion" src={img4} />
           </CarouselItem>
           <CarouselItem>
-            <img className="image" alt="homeimages" src={img5} />
+            <img className="image" alt="QuickCure healthcare promotion" src={img5} />
           </CarouselItem>
           <CarouselItem>
-            <img className="image" alt="homeimages" src={img6} />
+            <img className="image" alt="QuickCure healthcare promotion" src={img6} />
           </CarouselItem>
         </Carousel>
-        <img className="image1" src={item1} />
+        <img className="image1" src={item1} alt="Health products available on QuickCure" />
       </div>
       <div className="line">
         <h2>Quick Cure: India’s Leading Online Pharmacy & Healthcare Platform</h2>
       </div>
       <div>
-        <img className="image3" src={item2} />
+        <img className="image3" src={item2} alt="QuickCure online pharmacy services" />
       </div>
       <Container fluid className="m-0">
         <Row>
@@ -170,83 +161,7 @@ function Homepage() {
                 </div>
               </div>
 
-              <div className="health-button">
-                <img
-                  className="u mb-2 mt-1 h-75"
-                  alt="Derma Care"
-                  src="https://onemg.gumlet.io/730dbe50-4bdc-4fa8-9a09-93bc5d6c6f38.png?format=auto"
-                />
-                <div className="product-btn">
-                  <button onClick={() => navigate('/medicines?category=derma')}>
-                    Derma Care
-                  </button>
-                </div>
-              </div>
 
-              <div className="health-button">
-                <img
-                  className="u mb-2 mt-1 h-75"
-                  alt="Respiratory Care"
-                  src="https://onemg.gumlet.io/8051e79c-6152-440e-b402-8d1ba8d7c82e.png?format=auto"
-                />
-                <div className="product-btn">
-                  <button onClick={() => navigate('/medicines?category=respiratory')}>
-                    Respiratory Care
-                  </button>
-                </div>
-              </div>
-
-              <div className="health-button">
-                <img
-                  className="u mb-2 mt-1 h-75"
-                  alt="Derma Care"
-                  src="https://onemg.gumlet.io/730dbe50-4bdc-4fa8-9a09-93bc5d6c6f38.png?format=auto"
-                />
-                <div className="product-btn">
-                  <button onClick={() => navigate('/medicines?category=derma')}>
-                    Derma Care
-                  </button>
-                </div>
-              </div>
-
-              <div className="health-button">
-                <img
-                  className="u mb-2 mt-1 h-75"
-                  alt="Respiratory Care"
-                  src="https://onemg.gumlet.io/8051e79c-6152-440e-b402-8d1ba8d7c82e.png?format=auto"
-                />
-                <div className="product-btn">
-                  <button onClick={() => navigate('/medicines?category=respiratory')}>
-                    Respiratory Care
-                  </button>
-                </div>
-              </div>
-
-              <div className="health-button">
-                <img
-                  className="u mb-2 mt-1 h-75"
-                  alt="Derma Care"
-                  src="https://onemg.gumlet.io/730dbe50-4bdc-4fa8-9a09-93bc5d6c6f38.png?format=auto"
-                />
-                <div className="product-btn">
-                  <button onClick={() => navigate('/medicines?category=derma')}>
-                    Derma Care
-                  </button>
-                </div>
-              </div>
-
-              <div className="health-button">
-                <img
-                  className="u mb-2 mt-1 h-75"
-                  alt="Respiratory Care"
-                  src="https://onemg.gumlet.io/8051e79c-6152-440e-b402-8d1ba8d7c82e.png?format=auto"
-                />
-                <div className="product-btn">
-                  <button onClick={() => navigate('/medicines?category=respiratory')}>
-                    Respiratory Care
-                  </button>
-                </div>
-              </div>
             </div>
           </Col>
         </Row>
@@ -313,7 +228,7 @@ function Homepage() {
         <Row>
           <b className="box p-0">Full Body Tests</b>
           <Col className="container center p-4 d-flex">
-            <div className="cont d-flex">
+            <div className="cont d-flex test-packages-scroll">
               <div className="test mt-2 mb-2 p-3 m-2 col-3 shadow border">
                 <div className="d-flex">
                   <h6 className="ms-1 mb-5" onClick={() => Test()}>
@@ -639,7 +554,7 @@ function Homepage() {
           <div className='utensil'>
           <div className='uten'>
           <div className='item'>
-            
+
             <img className='u m-4' alt='images' src='https://onemg.gumlet.io/diagnostics%2F2024-09%2F1725426638_Goqii.png?format=auto'/>
             <img className='u m-4' alt='images' src='https://onemg.gumlet.io/diagnostics%2F2024-09%2F1725516243_Centrum.png?format=auto'/>
             <img className='u m-4' alt='images' src='https://onemg.gumlet.io/diagnostics%2F2024-09%2F1725426617_Aimil.png?format=auto'/>
@@ -655,146 +570,8 @@ function Homepage() {
           </Col>
         </Row>
       </Container>
-      
-      <Container fluid className='m-0'>
-        <Row>
-        <b className='box p-0'>Full Body Tests</b>
-          <Col className="container center p-4 d-flex ">
-          <div className='cont d-flex'>
-        <div className=" test mt-2 mb-2 p-3 m-2 col-3 shadow border">
-        <div className="d-flex">
-      
-        <h6 className="ms-1 mb-5">Good Health Smart Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹399</p>
-        <p><del>798</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        
-        <div className=" test mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Comprehensive Gold Full Body Test</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹2249</p>
-        <p><del>4498</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className=" test mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Good Health Silver Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹699</p>
-        <p><del>1398</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className="test  mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Comprehensive Silver Full Body Test</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹1899</p>
-        <p><del>₹3798</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className="test  mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Women Wellness Premium Test</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹1899</p>
-        <p><del>₹3798</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className=" test mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Comprehensive Platinum Full Body Test</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹3599</p>
-        <p><del>₹7198</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className="test  mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Good Health Premium Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹1499</p>
-        <p><del>₹2998</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className="test  mt-2 mb-2 p-3 m-2 col-3 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Senior Citizen Advanced Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹1675</p>
-        <p><del>₹3350</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className=" test mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Men Health Premium Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹1899</p>
-        <p><del>₹3798</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className="test  mt-2 mb-2 p-3 col-3  m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Fever Package Extensive Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹999</p>
-        <p><del>₹1998</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className=" test mt-2 mb-2 p-3 m-2 col-3 shadow border">
-        <div className="d-flex ">
-        <h6 className="ms-1 mb-5">Good Health Gold Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹999</p>
-        <p><del>₹1998</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className="test  mt-2 mb-2 p-3 col-3  m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Senior Citizen Comprehensive Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹3699</p>
-        <p><del>₹7398</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className=" test mt-2 mb-2 p-3 m-2 col-3 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Senior Citizen Comprehensive Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹3699</p>
-        <p><del>₹7398</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-       
-        <div className="test  mt-2 mb-2 p-3 m-2 col-3 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Senior Citizen Comprehensive Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹3699</p>
-        <p><del>₹7398</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        </div>
-      
-           </Col>
-        </Row>
-      </Container>
+
+
       <Container fluid className='m-0'>
     <Row>
         <Col className='ef const bg-light'>
@@ -883,7 +660,7 @@ function Homepage() {
           <div className='utensil'>
           <div className='uten'>
           <div className='item'>
-            
+
             <img className='u m-4' alt='images' src='https://onemg.gumlet.io/image/upload/v1627648521/ktzih4wnm4xfynusrep6.png?format=auto'/>
             <img className='u m-4' alt='images' src='https://onemg.gumlet.io/image/upload/v1627648507/kvwlak2daqdzaflvgx2u.png?format=auto'/>
             <img className='u m-4' alt='images' src='https://onemg.gumlet.io/image/upload/v1627648455/shxhntpjye31tu8frfjs.png?format=auto'/>
@@ -899,145 +676,7 @@ function Homepage() {
           </Col>
         </Row>
       </Container>
-      <Container fluid className='m-0'>
-        <Row>
-        <b className='box p-0'>Full Body Tests</b>
-          <Col className="container center p-4 d-flex ">
-          <div className='cont d-flex'>
-        <div className="test mt-2 mb-2 p-3 m-2 col-3 shadow border">
-        <div className="d-flex">
-      
-        <h6 className="ms-1 mb-5">Good Health Smart Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹399</p>
-        <p><del>798</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        
-        <div className=" test mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Comprehensive Gold Full Body Test</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹2249</p>
-        <p><del>4498</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className=" test mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Good Health Silver Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹699</p>
-        <p><del>1398</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className=" test mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Comprehensive Silver Full Body Test</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹1899</p>
-        <p><del>₹3798</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className=" test mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Women Wellness Premium Test</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹1899</p>
-        <p><del>₹3798</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className=" test mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Comprehensive Platinum Full Body Test</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹3599</p>
-        <p><del>₹7198</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className="test  mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Good Health Premium Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹1499</p>
-        <p><del>₹2998</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className=" test mt-2 mb-2 p-3 m-2 col-3 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Senior Citizen Advanced Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹1675</p>
-        <p><del>₹3350</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className="test  mt-2 mb-2 p-3 col-3 m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Men Health Premium Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹1899</p>
-        <p><del>₹3798</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className=" test mt-2 mb-2 p-3 col-3  m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Fever Package Extensive Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹999</p>
-        <p><del>₹1998</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className="test  mt-2 mb-2 p-3 m-2 col-3 shadow border">
-        <div className="d-flex ">
-        <h6 className="ms-1 mb-5">Good Health Gold Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹999</p>
-        <p><del>₹1998</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className="test  mt-2 mb-2 p-3 col-3  m-2 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Senior Citizen Comprehensive Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹3699</p>
-        <p><del>₹7398</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        <div className="test  mt-2 mb-2 p-3 m-2 col-3 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Senior Citizen Comprehensive Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹3699</p>
-        <p><del>₹7398</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-       
-        <div className="test  mt-2 mb-2 p-3 m-2 col-3 shadow border">
-        <div className="d-flex">
-        <h6 className="ms-1 mb-5">Senior Citizen Comprehensive Package</h6></div>
-        <div className='d-flex'>
-        <p className='me-2 mb-0'>₹3699</p>
-        <p><del>₹7398</del></p>
-        <p className='border border-success-subtle bg-success-subtle p-1 ms-3 mt-0'>50% off</p>
-        </div>
-        </div>
-        </div>
-      
-           </Col>
-        </Row>
-      </Container>
+
 
 
       <Footer />

@@ -2,6 +2,8 @@ import React from 'react';
 import Footer from './Footer'
 
 const AboutUs = () => {
+  const scrollToServices = () => document.getElementById('about-services')?.scrollIntoView({ behavior: 'smooth' });
+
   return (
     <div className="about-us-container">
       {/* Hero Section */}
@@ -10,7 +12,7 @@ const AboutUs = () => {
     <div className="hero-content">
       <h1>Welcome to QuickCure</h1>
       <p>Your Trusted Partner in Health & Wellness</p>
-      <button className="cta-button">Explore Our Services</button>
+      <button className="cta-button" onClick={scrollToServices}>Explore Our Services</button>
     </div>
   </div>
 </section>
@@ -51,32 +53,32 @@ const AboutUs = () => {
       </section>
 
       {/* Services Section */}
-      <section className="services-section">
+      <section className="services-section" id="about-services">
         <h2>Our Services</h2>
         <div className="service-items">
           <div className="service-item">
             {/* Add your image URL here */}
             <img src="https://www.swaconhospital.com/wp-content/uploads/2019/09/34-5-reasons-why-you-need-a-regular-checkup-feat-1080x600.jpg" alt="Health Checkups" />
             <h3>Health Checkups</h3>
-            <p>Comprehensive diagnostic tests at your convenience.</p>
+            <p>Browse sample diagnostic packages. Booking is not connected in this demo.</p>
           </div>
           <div className="service-item">
             {/* Add your image URL here */}
             <img src="https://www.movementdisordersclinic.com/wp-content/uploads/2020/04/online-consult.jpg" alt="Online Consultations" />
             <h3>Online Consultations</h3>
-            <p>Consult with top doctors from anywhere.</p>
+            <p>Consultation information is available, but appointment requests are not connected.</p>
           </div>
           <div className="service-item">
             {/* Add your image URL here */}
             <img src="https://www.holdings.toppan.com/en/news/2020/08/t5v1940000000jq1-img/Todokusuri.jpg" alt="Medicine Delivery" />
             <h3>Medicine Delivery</h3>
-            <p>Order your medications and get them delivered to your door.</p>
+            <p>Browse medicine listings and add items to your local cart.</p>
           </div>
           <div className="service-item">
             {/* Add your image URL here */}
             <img src="https://media.istockphoto.com/id/1492377092/photo/magnifier-with-brainstorm-inside-to-smart-idea-creative-thinking-education-innovation-smart.jpg?s=612x612&w=0&k=20&c=OPlp7q4udogoliF4NaBhlzbubQ8k8WrwR1L8eN-fmts=" alt="Health Insights" />
-            <h3>Health Insights</h3>
-            <p>Personalized health tips and insights for a healthier life.</p>
+            <h3>Health Information</h3>
+            <p>Explore the educational information included in QuickCure.</p>
           </div>
         </div>
       </section>
@@ -86,16 +88,16 @@ const AboutUs = () => {
         <h2>Why Choose QuickCure?</h2>
         <div className="reasons">
           <div className="reason">
-            <h3>Trusted & Reliable</h3>
-            <p>We work with accredited labs and certified professionals.</p>
+            <h3>Clear information</h3>
+            <p>Product details and page status are presented directly.</p>
           </div>
           <div className="reason">
-            <h3>Convenience</h3>
-            <p>All healthcare services accessible from your phone.</p>
+            <h3>Simple shopping flow</h3>
+            <p>Medicine selections stay in a cart saved in this browser.</p>
           </div>
           <div className="reason">
-            <h3>24/7 Support</h3>
-            <p>Our support team is here to help you anytime, anywhere.</p>
+            <h3>Student project</h3>
+            <p>QuickCure demonstrates a healthcare storefront with selected working flows.</p>
           </div>
         </div>
       </section>

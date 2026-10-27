@@ -1,133 +1,150 @@
 .medicines-container {
-  padding: 30px;
-  max-width: 1400px;
+  max-width: 1380px;
   margin: 0 auto;
+  padding: 28px 32px 48px;
 }
 
 .medicines-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
+  margin: 0 0 22px;
+  color: #263238;
+  font-size: 1.85rem;
+  font-weight: 600;
+}
+
+.medicines-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+  gap: 20px;
 }
 
 .medicine-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 30px;
-  margin: 30px;
-  width: 260px;
-  text-align: center;
-  display: inline-block;
-  vertical-align: top;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #dce2e5;
+  border-radius: 6px;
+  background: #fff;
 }
 
 .medicine-image {
   width: 100%;
-  height: 150px;
-  object-fit: cover;
+  height: 190px;
+  object-fit: contain;
   border-radius: 4px;
+  background: #fff;
 }
 
 .medicine-card h3 {
-  font-size: 16px;
-  margin: 10px 0;
-  height: 40px;
+  min-height: 42px;
+  margin: 12px 0 8px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  color: #263238;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 .price {
-  font-size: 14px;
+  min-height: 42px;
+  margin: 0;
   color: #333;
+  font-size: 1rem;
+}
+
+.discount,
+.membership-discount {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 0.88rem;
 }
 
 .discount {
-  color: green;
-  font-size: 12px;
-  margin-left: 5px;
+  color: #287a3e;
 }
 
 .membership-discount {
-  color: blue;
-  font-size: 12px;
-  margin-left: 5px;
+  color: #376b88;
 }
 
 .buttons {
-  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
 }
 
-.cart-btn, .details-btn {
-  padding: 8px 12px;
-  margin: 5px;
-  border: none;
+.cart-btn,
+.details-btn {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #cf8008;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 0.98rem;
 }
 
 .cart-btn {
-  background-color: #e5910a;
-  color: white;
+  background: #e5910a;
+  color: #fff;
 }
 
 .details-btn {
-  background-color: #e5910a;
-  color: white;
+  background: #fff;
+  color: #714400;
+}
+
+.cart-btn:hover,
+.details-btn:hover {
+  filter: brightness(0.96);
 }
 
 .pagination-container {
+  margin-top: 24px;
   text-align: center;
-  margin-top: 20px;
 }
 
 .pagination {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .pagination button {
   padding: 8px 12px;
-  margin: 0 5px;
-  border: 1px solid #ddd;
-  background-color: #e5910a;
+  border: 1px solid #cf8008;
+  border-radius: 4px;
+  background: #e5910a;
+  color: #fff;
   cursor: pointer;
 }
 
 .pagination button:disabled {
-  background-color: #ddd;
+  border-color: #d5dadd;
+  background: #e7eaec;
+  color: #68747a;
   cursor: not-allowed;
 }
 
-.pagination span {
-  margin: 0 10px;
-}
-
-/* New Styles for Search Bar */
-.search-bar {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.search-input {
-  padding: 10px;
-  width: 300px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-@media (max-width: 900px) {
-  .medicine-card {
-    width: 50%;
-
-
-  }
-}
-
-@media (max-width: 600px) {
-  .medicine-card {
-    width: 100%;
+@media (max-width: 700px) {
+  .medicines-container {
+    padding: 18px 16px 32px;
   }
 
-  .search-input {
-    width: 100%;
+  .medicines-container h2 {
+    font-size: 1.4rem;
+  }
+
+  .medicines-grid {
+    grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+    gap: 12px;
+  }
+
+  .medicine-card {
+    padding: 12px;
+  }
+
+  .medicine-image {
+    height: 130px;
   }
 }

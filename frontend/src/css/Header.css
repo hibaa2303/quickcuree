@@ -50,26 +50,24 @@
     background-color: rgb(160, 206, 252);
 }
 .full{
-    position: fixed;
+    position: relative;
     width :100%;
-   top:0px;
-   height :60px;
-   z-index:1030;
-
+   top:auto;
+   height :auto;
+   z-index:auto;
+   background: #fff;
+}
+.header-shell {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
 }
 .fulll{
-    margin-top:175px;
+    margin-top:24px;
 }
 .ef::-webkit-scrollbar {
     display: none;
   }
- .sign {
-    margin-top :200px;
- }     
-   
-.log{
-    margin-top :170px;
-}
 .cart{
     margin-top:100px;
 }
@@ -157,6 +155,246 @@
 .hihi{
     margin-top:200px;
 }  
+
+/* Keep the existing three-row header, with enough room for each row. */
+.navbar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  justify-content: initial;
+  gap: 18px;
+  min-height: 58px;
+  padding: 8px 24px;
+}
+
+.navbar .logo {
+  width: 178px;
+  max-height: 54px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.navbar .header-link {
+  padding: 8px 10px;
+  border: 0;
+  background: transparent;
+  color: #263238;
+  cursor: pointer;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.navbar .header-link:hover,
+.navbar .header-link:focus-visible {
+  color: #087f83;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.header-primary-nav,
+.header-account-area,
+.header-user-controls {
+  display: flex;
+  align-items: center;
+}
+
+.header-primary-nav {
+  justify-content: center;
+  gap: 50px;
+}
+
+.header-account-area {
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.header-user-controls {
+  gap: 2px;
+}
+
+.navbar .buttonn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 4px;
+}
+
+.secondnav {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 24px;
+}
+
+.header-search-group {
+  display: flex;
+  width: min(74%, 900px);
+  min-width: 0;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid #aebbc1;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.header-location {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  border: 0;
+  border-right: 1px solid #c7d0d4;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.header-search {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.header-search .search {
+  min-width: 0;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #fff;
+  font-size: 16px;
+}
+
+.header-search button {
+  flex: 0 0 auto;
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  border-radius: 0 !important;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.thirdnav {
+  position: relative;
+  z-index: 1040;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 8px;
+  overflow: visible;
+  padding: 5px 18px;
+}
+
+.thirdnav .dropdown-toggle {
+  padding: 8px 10px;
+  border: 0;
+  background-color: rgb(163, 206, 224);
+  color: #263238;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.thirdnav .dropdown-toggle:hover,
+.thirdnav .dropdown-toggle:focus-visible,
+.thirdnav .dropdown.show .dropdown-toggle {
+  background-color: #c2e1ed;
+  color: #17292f;
+}
+
+.thirdnav .dropdown-menu {
+  z-index: 1050;
+  min-width: 230px;
+  padding: 6px 0;
+}
+
+.thirdnav .dropdown-item {
+  padding: 8px 14px;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 850px) {
+  .navbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 12px;
+    padding: 8px 12px;
+  }
+
+ .navbar .logo {
+    width: 150px;
+  }
+
+  .header-primary-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    flex-wrap: wrap;
+    gap: 0 8px;
+  }
+
+  .header-primary-nav .header-link {
+    padding: 6px 8px;
+  }
+
+  .header-account-area {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .secondnav {
+    padding: 8px 12px;
+  }
+
+  .header-search-group {
+    width: min(100%, 680px);
+  }
+}
+
+@media (max-width: 520px) {
+  .navbar .header-link {
+    padding: 6px 5px;
+    font-size: 15px;
+  }
+
+ .navbar .logo {
+    width: 125px;
+  }
+
+  .thirdnav {
+    justify-content: center;
+    overflow: visible;
+    padding: 5px 8px;
+  }
+
+  .header-search-group {
+    width: 100%;
+  }
+
+  .header-location {
+    gap: 3px;
+    padding: 0 8px;
+    font-size: 14px;
+  }
+
+  .header-search .search {
+    padding: 9px 8px;
+    font-size: 14px;
+  }
+
+  .header-search button {
+    padding: 7px 9px;
+    font-size: 14px;
+  }
+}
 
 
 

@@ -5,7 +5,7 @@
     color: #333;
     padding: 20px;
     max-width: 1500px;
-    margin-top:150px;
+    margin-top:0;
   }
 
 
@@ -19,58 +19,58 @@
     padding: 40px;
     font-family: Arial, sans-serif;
   }
-  
+
   .carousell {
     flex: 1;
     max-width: 40%;
   }
-  
+
   .carousel-image {
     width: 100%;
     height: auto;
     border-radius: 8px;
   }
-  
+
   .banner-content {
     flex: 1;
     padding-left: 20px;
   }
-  
+
   .banner-content h1 {
     font-size: 2rem;
     margin-bottom: 10px;
     color: #333;
   }
-  
+
   .banner-content p {
     font-size: 1rem;
     color: #777;
     margin-bottom: 20px;
   }
-  
+
   .features {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
   }
-  
+
   .feature-item {
     text-align: center;
   }
-  
+
   .feature-item i {
     font-size: 1.5rem;
     margin-bottom: 5px;
     display: block;
     color: #333;
   }
-  
+
   .feature-item span {
     font-size: 1.0rem;
     color: #555;
     margin-right:10px;
   }
-  
+
   .view-packages-button {
     background-color: #ff6f61;
     color: #fff;
@@ -80,33 +80,33 @@
     cursor: pointer;
     border-radius: 5px;
     margin-left:300px;
-    
+
   }
   .view-packages-button:hover {
     background-color: #e64a19;
   }
 
-  
 
 
 
-  
+
+
   .popular-tests, .popular-health-checkups {
     margin-bottom: 60px;
     margin-top:50px;
   }
-  
+
   .popular-tests h2, .popular-health-checkups h2 {
     font-size: 24px;
     margin-bottom: 40px;
     text-align: center;
   }
-  
+
   .tests-container {
     display: flex;
     justify-content: space-between;
   }
-  
+
   .tests-column {
     width: 48%;
     background-color: #f9f9f9;
@@ -114,12 +114,12 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
   .tests-column h3 {
     font-size: 18px;
     margin-bottom: 15px;
   }
-  
+
   .tests-column ul {
     list-style-type: none;
     padding: 0;
@@ -127,13 +127,13 @@
     line-height: 1.8;
     font-size: 14px;
   }
-  
+
   .popular-health-checkups .checkups-grid {
     display: flex;
     justify-content: space-between;
     gap: 20px;
   }
-  
+
   .checkup-card {
     border: 1px solid #ddd;
     padding: 20px;
@@ -143,34 +143,34 @@
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
   .checkup-card h3 {
     font-size: 18px;
     margin-bottom: 15px;
   }
-  
+
   .checkup-card p {
     font-size: 14px;
     margin-bottom: 10px;
   }
-  
+
   .checkup-card .price {
     font-size: 16px;
     font-weight: bold;
     margin: 20px 0;
   }
-  
+
   .old-price {
     text-decoration: line-through;
     color: #888;
     margin-left: 5px;
   }
-  
+
   .discount {
     color: #ff5722;
     font-size: 14px;
   }
-  
+
   .add-to-cart-btn {
     padding: 10px 20px;
     background-color: #ff5722;
@@ -180,14 +180,181 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-  
+
   .add-to-cart-btn:hover {
     background-color: #e64a19;
   }
 
+.lab-page {
+  max-width: 1320px;
+  margin: 28px auto 0;
+  padding: 26px 30px 48px;
+  color: #263238;
+}
+
+.lab-page .lab-test-banner {
+  gap: 28px;
+  padding: 34px;
+  border: 1px solid #dce4e6;
+  border-radius: 5px;
+  background: #f3f7f7;
+}
+
+.lab-page .carousell {
+  flex: 0 1 38%;
+  max-width: 42%;
+}
+
+.lab-page .carousel-image {
+  max-height: 320px;
+  object-fit: contain;
+}
+
+.lab-page .banner-content {
+  min-width: 0;
+  padding-left: 0;
+}
+
+.lab-page .banner-content h1 {
+  font-size: 2rem;
+  line-height: 1.25;
+}
+
+.lab-page .banner-content p {
+  color: #5d696e;
+}
+
+.lab-page .features {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.lab-page .feature-item {
+  padding: 8px 10px;
+  border: 1px solid #dce4e6;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.lab-page .feature-item span {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.lab-page .view-packages-button {
+  margin: 4px 0 0;
+  border-radius: 4px;
+  background: #e5910a;
+}
+
+.lab-page .view-packages-button:hover {
+  background: #cf8008;
+}
+
+.lab-page .lab-demo-note {
+  margin: 10px 0 0;
+  font-size: 0.95rem;
+}
+
+.lab-page .popular-health-checkups {
+  margin: 30px 0 0;
+  scroll-margin-top: 180px;
+}
+
+.lab-page .popular-health-checkups h2 {
+  margin-bottom: 18px;
+  color: #263238;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.lab-page .checkups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  gap: 16px;
+}
+
+.lab-page .checkup-card {
+  display: flex;
+  width: auto;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 22px;
+  border-color: #dce2e5;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: none;
+  text-align: left;
+}
+
+.lab-page .checkup-card h3 {
+  margin-bottom: 8px;
+  font-size: 1.15rem;
+}
+
+.lab-page .checkup-card p {
+  margin-bottom: 5px;
+  color: #58656a;
+}
+
+.lab-page .checkup-card .price {
+  margin: auto 0 12px;
+  padding-top: 12px;
+  color: #263238;
+}
+
+.lab-page .old-price {
+  font-weight: 400;
+}
+
+.lab-page .discount {
+  color: #287a3e;
+  font-size: 0.95rem;
+}
+
+.lab-page .add-to-cart-btn {
+  width: 100%;
+  border-radius: 4px;
+  background: #e5910a;
+}
+
+.lab-page .lab-cart-message {
+  min-height: 1.4em;
+  margin: 12px 0;
+  color: #287a3e;
+}
+
+@media (max-width: 760px) {
+  .lab-page {
+    margin-top: 16px;
+    padding: 12px 14px 28px;
+  }
+
+  .lab-page .lab-test-banner {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 18px;
+  }
+
+  .lab-page .carousell {
+    max-width: 100%;
+  }
+
+  .lab-page .carousel-image {
+    max-height: 190px;
+  }
+
+  .lab-page .features {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
 
 
 
 
-  
-  
+
+
+

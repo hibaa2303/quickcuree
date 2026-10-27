@@ -2,7 +2,7 @@
   font-family: 'Arial', sans-serif;
   color: #333;
   line-height: 1.6;
-  margin-top:170px;
+  margin-top:24px;
 
 }
 
@@ -155,4 +155,133 @@
   height: auto;
   margin-top: 20px;
   border-radius: 3px;
+}
+
+.about-us-container {
+  margin-top: 24px;
+  color: #263238;
+}
+
+.about-us-container .hero-section {
+  height: 360px;
+}
+
+.about-us-container .hero-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.about-us-container .hero-content h1 {
+  font-size: 2.6rem;
+}
+
+.about-us-container .hero-content p {
+  font-size: 1.2rem;
+}
+
+.about-us-container .cta-button {
+  border-radius: 4px;
+  background: #e5910a;
+  padding: 10px 20px;
+}
+
+.about-us-container .cta-button:hover {
+  background: #cf8008;
+}
+
+.about-us-container .mission-section,
+.about-us-container .vision-section,
+.about-us-container .services-section,
+.about-us-container .why-choose-us-section,
+.about-us-container .join-us-section {
+  padding: 46px max(24px, calc((100% - 1240px) / 2));
+}
+
+.about-us-container .mission-content,
+.about-us-container .vision-content {
+  gap: 36px;
+}
+
+.about-us-container .mission-image img,
+.about-us-container .vision-image img {
+  width: min(100%, 540px);
+  max-height: 340px;
+  object-fit: cover;
+}
+
+.about-us-container .service-items {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.about-us-container .service-item {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #dce2e5;
+  background: #fff;
+}
+
+.about-us-container .service-item img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.about-us-container .service-item p,
+.about-us-container .mission-text p,
+.about-us-container .vision-text p,
+.about-us-container .reason p {
+  color: #59666b;
+  line-height: 1.55;
+}
+
+.about-us-container .reasons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.about-us-container .reason {
+  padding: 16px;
+  border: 1px solid #d5dddf;
+  background: #fff;
+}
+
+.about-us-container .join-us-section {
+  padding-top: 42px;
+  padding-bottom: 42px;
+}
+
+.about-us-container .join-us-content img {
+  max-height: 300px;
+  object-fit: cover;
+}
+
+@media (max-width: 760px) {
+  .about-us-container {
+    margin-top: 16px;
+  }
+
+  .about-us-container .hero-section {
+    height: 280px;
+  }
+
+  .about-us-container .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .about-us-container .mission-section,
+  .about-us-container .vision-section,
+  .about-us-container .services-section,
+  .about-us-container .why-choose-us-section,
+  .about-us-container .join-us-section {
+    padding: 28px 16px;
+  }
+
+  .about-us-container .mission-content,
+  .about-us-container .vision-content {
+    align-items: stretch;
+  }
 }

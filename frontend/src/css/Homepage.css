@@ -252,3 +252,286 @@ body {
     transition: 0.3s ease-in-out;
 }
 
+/* Homepage layout adjustments */
+.homepage-content {
+    margin-top: 24px;
+    padding-bottom: 24px;
+    color: #263238;
+}
+
+.homepage-content .first {
+    display: flex;
+    align-items: flex-start;
+  gap: 16px;
+  padding: 0 24px;
+}
+
+.homepage-content .first > .carousel {
+    flex: 2 1 0;
+    min-width: 0;
+}
+
+.homepage-content .first .carousel-inner,
+.homepage-content .first .carousel-item {
+    height: auto;
+}
+
+.homepage-content .first .image {
+    display: block;
+    width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.homepage-content .image1 {
+    flex: 1 1 0;
+    width: 0;
+  height: auto;
+  object-fit: contain;
+}
+
+.homepage-content .line {
+  margin: 22px 24px 12px;
+  padding: 14px 18px;
+    border: 0;
+    border-bottom: 1px solid #d9e0e3;
+    text-align: left;
+}
+
+.homepage-content .line h2 {
+    margin: 0;
+    color: #263238;
+    font-size: 1.55rem;
+    font-weight: 600;
+}
+
+.homepage-content .image3 {
+    display: block;
+  width: min(100% - 48px, 1240px);
+  max-height: 230px;
+  margin: 20px auto 34px;
+    object-fit: contain;
+}
+
+.homepage-content .box {
+    display: block;
+  margin: 26px 28px 14px;
+    color: #263238;
+  font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.homepage-content .health-buttons,
+.homepage-content .popular-categories {
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: normal;
+  padding: 20px 24px;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+}
+
+.homepage-content .health-button,
+.homepage-content .category-item,
+.homepage-content .product-item {
+  flex: 0 0 190px;
+  width: 190px;
+  margin-right: 0;
+}
+
+.homepage-content .health-button img,
+.homepage-content .category-img {
+  width: 142px;
+  height: 142px;
+    object-fit: contain;
+}
+
+.homepage-content .category-img {
+    margin-bottom: 6px;
+}
+
+.homepage-content .product-btn button {
+    border: 1px solid #d6dfe2;
+    border-radius: 4px;
+    background: #fff;
+  font-size: 1rem;
+}
+
+.homepage-content .item {
+  display: flex;
+  align-items: center;
+  height: auto;
+  min-height: 156px;
+  margin: 0;
+  padding: 12px 20px;
+  gap: 14px;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+}
+
+.homepage-content .item img {
+  display: block;
+  flex: 0 0 160px;
+  width: 160px;
+  height: 112px;
+  margin: 0 !important;
+  object-fit: contain;
+}
+
+.homepage-content .test-packages-scroll {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  padding: 16px 24px 22px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+  white-space: normal;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+}
+
+.homepage-content .test {
+  display: flex;
+  flex: 0 0 280px;
+  flex-direction: column;
+  width: 280px;
+  min-width: 0;
+  min-height: 176px;
+  margin: 0 !important;
+  padding: 20px !important;
+    border-color: #dce2e5 !important;
+    border-radius: 5px;
+    box-shadow: none !important;
+}
+
+.homepage-content .test > .d-flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.homepage-content .test h6 {
+  margin: 0 0 16px !important;
+  min-height: 48px;
+}
+
+.homepage-content .test p {
+  margin: 0 !important;
+  line-height: 1.35;
+}
+
+.homepage-content .test p:last-child {
+  padding: 5px 7px !important;
+}
+
+.homepage-content .test:hover,
+.homepage-content .health-button:hover,
+.homepage-content .u:hover,
+.homepage-content .product-item:hover {
+    transform: none;
+    transition: none;
+}
+
+.homepage-content .test h6 {
+  min-height: 52px;
+    line-height: 1.35;
+  font-size: 1.05rem;
+    cursor: pointer;
+}
+
+.homepage-content .product-img {
+  width: 124px;
+  height: 124px;
+    object-fit: contain;
+}
+
+@media (max-width: 760px) {
+    .homepage-content {
+        margin-top: 16px;
+    }
+
+    .homepage-content .first {
+        flex-direction: column;
+        padding: 0 12px;
+    }
+
+    .homepage-content .first .image,
+    .homepage-content .image1 {
+        width: 100%;
+        height: auto;
+    }
+
+    .homepage-content .image3 {
+        width: calc(100% - 24px);
+        margin: 12px auto 20px;
+    }
+
+    .homepage-content .line {
+        margin-right: 12px;
+        margin-left: 12px;
+    }
+
+    .homepage-content .line h2 {
+        font-size: 1.3rem;
+    }
+
+    .homepage-content .box {
+        margin-right: 16px;
+        margin-left: 16px;
+    }
+
+    .homepage-content .row > .box {
+        flex-basis: calc(100% - 32px);
+        width: calc(100% - 32px);
+    }
+
+    .homepage-content .health-buttons,
+    .homepage-content .popular-categories {
+        justify-content: flex-start;
+        gap: 12px;
+        padding: 16px 12px;
+    }
+
+    .homepage-content .health-button,
+    .homepage-content .category-item {
+        flex-basis: 160px;
+        width: 160px;
+    }
+
+    .homepage-content .health-button img,
+    .homepage-content .category-img {
+        width: 132px;
+        height: 132px;
+    }
+
+    .homepage-content .item img {
+        flex-basis: 132px;
+        width: 132px;
+        height: 96px;
+    }
+
+    .homepage-content .item {
+        min-height: 132px;
+        padding: 10px 12px;
+    }
+
+    .homepage-content .test-packages-scroll {
+        padding: 12px;
+    }
+
+    .homepage-content .test {
+        flex-basis: 260px;
+        width: 260px;
+        padding: 16px !important;
+    }
+}
+

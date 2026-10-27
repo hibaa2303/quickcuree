@@ -2,17 +2,53 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import cartuu from './image/cart.jpeg';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import './css/Cart.css';
+import axios from 'axios';
+import { API_BASE_URL } from './api';
+import { readCart, writeCart } from './cartStorage';
 
 
 function Cart() {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
+  const [catalogError, setCatalogError] = useState('');
 
-  // Load cart items from localStorage on mount
   useEffect(() => {
-    const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    setCartItems(storedItems);
+    const updateCart = () => setCartItems(readCart());
+    updateCart();
+    axios.get(`${API_BASE_URL}/medicines`)
+      .then((response) => {
+        const medicines = Array.isArray(response.data.data) ? response.data.data : [];
+        const byId = new Map(medicines.map((medicine) => [String(medicine._id), medicine]));
+        const refreshed = readCart().map((item) => {
+          if (item.type === 'labTest') return item;
+          const current = byId.get(String(item._id));
+          if (!current || !Number.parseFloat(String(current.price || '').replace(/[^\d.]/g, ''))) {
+            return { ...item, unavailable: true };
+          }
+          return { ...item, name: current.name, price: current.price, img: current.img, unavailable: false };
+        });
+        writeCart(refreshed);
+        setCartItems(refreshed);
+      })
+      .catch((error) => {
+        setCatalogError('Medicine prices could not be refreshed. Cart totals may use the last saved listing prices.');
+        console.error('Unable to refresh medicine prices:', error.response?.status || error.message);
+      });
+    window.addEventListener('cartUpdated', updateCart);
+    window.addEventListener('storage', updateCart);
+    return () => {
+      window.removeEventListener('cartUpdated', updateCart);
+      window.removeEventListener('storage', updateCart);
+    };
   }, []);
+
+  const itemCount = cartItems.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
+  const itemTotal = cartItems.reduce((sum, item) => {
+    if (item.unavailable) return sum;
+    const price = Number.parseFloat(String(item.price ?? '0').replace(/[^\d.]/g, '')) || 0;
+    return sum + price * (Number(item.quantity) || 1);
+  }, 0);
 
   // Navigate to Homepage
   const goToHomepage = () => {
@@ -32,10 +68,10 @@ function Cart() {
           <>
             <img className="cart-image" src={cartuu} alt="Empty Cart" />
             <h4 className="fw-bold">Your cart is empty</h4>
-            <p className="text-secondary">
+            <div className="text-secondary mb-3">
               We have all the medicines and health care
-              <p>products that you need</p>
-            </p>
+              <div>products that you need</div>
+            </div>
             <button
               className="btn text-danger border border-danger"
               onClick={goToHomepage}
@@ -48,14 +84,17 @@ function Cart() {
           // Cart Summary State
           <>
             <h4 className="fw-bold">Your Cart</h4>
-            <p>You have {cartItems.length} item(s) in your cart.</p>
+            {catalogError && <p className="text-danger" role="alert">{catalogError}</p>}
+            <p>You have {itemCount} item(s) in your cart.</p>
             <ul className="cart-summary-list">
               {cartItems.map((item, index) => (
-                <li key={index} className="cart-summary-item">
-                  {item.name} - {item.price} x {item.quantity || 1}
+                <li key={item._id || item.name || index} className="cart-summary-item">
+                  <span>{item.name} × {item.quantity || 1}{item.unavailable ? ' — unavailable' : ''}</span>
+                  <span>{item.unavailable ? 'Price unavailable' : item.price}</span>
                 </li>
               ))}
             </ul>
+            <p className="cart-subtotal">Items total: ₹{itemTotal.toFixed(2)}</p>
             <button
               className="btn btn-primary"
               onClick={goToCartDetails}

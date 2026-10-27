@@ -1,0 +1,323 @@
+.medicine-details-page {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 20px 28px 56px;
+  color: #263238;
+}
+
+.details-back {
+  margin: 0 0 14px;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: #087f83;
+  cursor: pointer;
+  font-size: 0.98rem;
+}
+
+.medicine-detail-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) 280px;
+  align-items: start;
+  gap: 20px;
+}
+
+.medicine-detail-nav,
+.medicine-detail-overview,
+.medicine-detail-section,
+.medicine-purchase-panel {
+  border: 1px solid #dce2e5;
+  border-radius: 5px;
+  background: #fff;
+}
+
+.medicine-detail-nav {
+  position: sticky;
+  top: 208px;
+  display: flex;
+  max-height: calc(100vh - 224px);
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+  padding: 16px 12px;
+}
+
+.medicine-detail-nav h2 {
+  margin: 0 6px 10px;
+  color: #263238;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.medicine-detail-nav a {
+  padding: 8px 7px;
+  border-radius: 3px;
+  color: #405158;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.medicine-detail-nav a:hover,
+.medicine-detail-nav a:focus-visible {
+  background: #eef5f5;
+  color: #087f83;
+}
+
+.medicine-detail-content {
+  min-width: 0;
+}
+
+.medicine-detail-content section {
+  scroll-margin-top: 210px;
+}
+
+.medicine-detail-overview,
+.medicine-detail-section {
+  margin-bottom: 16px;
+  padding: 22px 24px;
+}
+
+.medicine-detail-overview {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: 24px;
+}
+
+.medicine-overview-image {
+  display: grid;
+  min-height: 230px;
+  place-items: center;
+}
+
+.medicine-overview-image img {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  max-height: 280px;
+  object-fit: contain;
+}
+
+.medicine-overview-copy {
+  min-width: 0;
+}
+
+.medicine-detail-eyebrow {
+  margin: 0 0 6px;
+  color: #68777c;
+  font-size: 0.88rem;
+  text-transform: capitalize;
+}
+
+.medicine-detail-overview h1 {
+  margin: 0 0 12px;
+  color: #263238;
+  font-size: 1.65rem;
+  line-height: 1.3;
+}
+
+.medicine-detail-overview > p:not(.medicine-detail-eyebrow),
+.medicine-detail-section > p {
+  margin: 0;
+  color: #59666b;
+  line-height: 1.6;
+}
+
+.medicine-detail-listing {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #e5eaec;
+}
+
+.medicine-detail-listing span {
+  color: #59666b;
+}
+
+.medicine-detail-section h2 {
+  margin: 0 0 12px;
+  color: #263238;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.medicine-legacy-copy {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #e8edef;
+}
+
+.medicine-legacy-warning {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-left: 3px solid #a96a12;
+  background: #fff7e8;
+  color: #664715;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.medicine-detail-section > .medicine-legacy-warning {
+  margin-bottom: 12px;
+}
+
+.medicine-legacy-copy > p:not(.medicine-legacy-warning) {
+  margin: 0;
+  color: #59666b;
+  line-height: 1.6;
+}
+
+.medicine-fact-box {
+  display: grid;
+  gap: 0;
+  margin: 0 0 12px;
+}
+
+.medicine-fact-box > div {
+  display: grid;
+  grid-template-columns: minmax(100px, 0.7fr) minmax(0, 1.3fr);
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e8edef;
+}
+
+.medicine-fact-box dt {
+  color: #647177;
+}
+
+.medicine-fact-box dd {
+  margin: 0;
+  color: #263238;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.medicine-purchase-panel {
+  position: sticky;
+  top: 208px;
+  padding: 18px;
+}
+
+.medicine-purchase-panel h2 {
+  margin: 0 0 12px;
+  color: #263238;
+  font-size: 1.12rem;
+  line-height: 1.4;
+}
+
+.medicine-purchase-price {
+  margin: 0;
+  color: #263238;
+  font-size: 1.2rem;
+  font-weight: 650;
+}
+
+.medicine-purchase-note {
+  margin: 6px 0 16px;
+  color: #68777c;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.medicine-purchase-panel .cart-btn {
+  width: 100%;
+  flex: none;
+}
+
+.medicine-purchase-details {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e5eaec;
+}
+
+.medicine-purchase-details h3 {
+  margin: 0 0 8px;
+  color: #263238;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.medicine-purchase-details .medicine-fact-box {
+  margin-bottom: 0;
+}
+
+.medicine-purchase-details .medicine-fact-box > div {
+  grid-template-columns: minmax(84px, 0.75fr) minmax(0, 1.25fr);
+  gap: 10px;
+  padding: 9px 0;
+}
+
+.medicine-detail-error {
+  color: #a12622;
+}
+
+.medicine-details-message {
+  min-height: 240px;
+}
+
+@media (max-width: 1100px) {
+  .medicine-detail-layout {
+    grid-template-columns: 200px minmax(0, 1fr);
+  }
+
+  .medicine-purchase-panel {
+    position: static;
+    grid-column: 2;
+  }
+
+  .medicine-detail-nav {
+    top: 208px;
+  }
+}
+
+@media (max-width: 700px) {
+  .medicine-details-page {
+    padding: 14px 14px 32px;
+  }
+
+  .medicine-detail-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .medicine-detail-overview {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .medicine-overview-image {
+    min-height: 180px;
+  }
+
+  .medicine-overview-image img {
+    max-height: 210px;
+  }
+
+  .medicine-detail-nav,
+  .medicine-purchase-panel {
+    position: static;
+    max-height: none;
+    grid-column: auto;
+  }
+
+  .medicine-detail-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .medicine-detail-nav h2 {
+    grid-column: 1 / -1;
+  }
+
+  .medicine-detail-overview,
+  .medicine-detail-section {
+    padding: 18px;
+  }
+
+  .medicine-detail-overview h1 {
+    font-size: 1.4rem;
+  }
+}

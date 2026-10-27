@@ -1,46 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import './css/Medicines.css';
+import { API_BASE_URL } from './api';
+import { addCartItem } from './cartStorage';
 
 function Medicines() {
   const [medicines, setMedicines] = useState([]);
-  const [filteredMedicines, setFilteredMedicines] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(20);
+  const itemsPerPage = 20;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [membershipDiscount, setMembershipDiscount] = useState(0);
-
   const navigate = useNavigate();
   const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const category = query.get('category');
+  const searchQuery = query.get('search')?.trim() || '';
 
-  // Fetch medicines and check membership on mount
+  // Fetch medicines for the selected category
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const query = new URLSearchParams(location.search);
-        const category = query.get('category');
-        console.log('Category on Medicines page:', category);
-
-        const response = await axios.get('http://localhost:3000/medicines', {
+        const response = await axios.get(`${API_BASE_URL}/medicines`, {
           params: { category }
         });
         const fetchedMedicines = response.data.data || [];
         setMedicines(fetchedMedicines);
-        setFilteredMedicines(fetchedMedicines);
         setError(null);
 
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (user && user.id) {
-          const membershipResponse = await axios.post('http://localhost:3000/add-membership', {
-            userId: user.id
-          });
-          if (membershipResponse.data.status === 'success') {
-            setMembershipDiscount(0.1);
-          }
-        }
       } catch (err) {
         setError('Failed to fetch medicines.');
         console.error('Error fetching medicines:', err);
@@ -50,53 +38,35 @@ function Medicines() {
     };
 
     fetchData();
-  }, [location.search]);
+  }, [category]);
 
-  // Handle search
+  const filteredMedicines = useMemo(() => {
+    const keyword = searchQuery.toLowerCase();
+    if (!keyword) return medicines;
+    return medicines.filter((medicine) =>
+      String(medicine.name || '').toLowerCase().includes(keyword)
+    );
+  }, [medicines, searchQuery]);
+
   useEffect(() => {
-    const searchMedicines = async () => {
-      if (searchQuery.trim() === '') {
-        setFilteredMedicines(medicines);
-        return;
-      }
-      try {
-        const response = await axios.get('http://localhost:3000/search', {
-          params: { keyword: searchQuery }
-        });
-        setFilteredMedicines(response.data.items || []);
-      } catch (err) {
-        console.error('Error searching medicines:', err);
-        setFilteredMedicines(medicines);
-      }
-    };
-
-    searchMedicines();
-  }, [searchQuery, medicines]);
+    setCurrentPage(1);
+  }, [searchQuery, location.search]);
 
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentMedicines = filteredMedicines.slice(indexOfFirstItem, indexOfLastItem);
+  const pageCount = Math.ceil(filteredMedicines.length / itemsPerPage);
 
   // Navigate to Details page
   const handleDetailsClick = (medicine) => {
-    navigate('/Details', { state: { medicine } });
+    navigate(`/details/${medicine._id}`, { state: { medicine } });
   };
 
   // Add to Cart
   const handleAddToCart = (medicine) => {
     try {
-      let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-      const index = cartItems.findIndex(item => item._id === medicine._id);
-
-      if (index !== -1) {
-        cartItems[index].quantity = (cartItems[index].quantity || 1) + 1;
-      } else {
-        cartItems.push({ ...medicine, quantity: 1 });
-      }
-
-      localStorage.setItem('cartItems', JSON.stringify(cartItems));
-      window.dispatchEvent(new Event('cartUpdated')); // Dispatch cartUpdated event
+      addCartItem(medicine);
       // Removed toast.success notification
     } catch (error) {
       console.error('Error adding to cart:', error);
@@ -104,46 +74,25 @@ function Medicines() {
   };
 
   // Dynamic title based on category
-  const query = new URLSearchParams(location.search);
-  const category = query.get('category');
   const pageTitle = category ? `${category.charAt(0).toUpperCase() + category.slice(1)} Medicines` : 'All Medicines';
-
-  // Apply membership discount to price
-  const getDiscountedPrice = (price) => {
-    const numericPrice = parseFloat(price.replace('₹', ''));
-    const discountedPrice = numericPrice * (1 - membershipDiscount);
-    return `₹${discountedPrice.toFixed(2)}`;
-  };
 
   if (loading) return <p>Loading medicines...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <div className="medicines-container">
-      {/* Search Bar */}
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search medicines..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="search-input"
-        />
-      </div>
-
       {/* Title */}
       <h2>{pageTitle}</h2>
 
       {/* Medicines Grid */}
       {currentMedicines.length > 0 ? (
-        currentMedicines.map((medicine) => (
+        <div className="medicines-grid">
+        {currentMedicines.map((medicine) => (
           <div key={medicine._id} className="medicine-card">
-            <img src={medicine.img} alt={medicine.name} className="medicine-image" />
+            <img src={medicine.img} alt={medicine.name} className="medicine-image" loading="lazy" />
             <h3>{medicine.name}</h3>
             <p className="price">
-              MRP {membershipDiscount > 0 ? getDiscountedPrice(medicine.price) : medicine.price}{' '}
-              <span className="discount">58% off</span>
-              {membershipDiscount > 0 && <span className="membership-discount"> + 10% member discount</span>}
+              MRP {medicine.price}{' '}
             </p>
             <div className="buttons">
               <button
@@ -162,9 +111,10 @@ function Medicines() {
               </button>
             </div>
           </div>
-        ))
+        ))}
+        </div>
       ) : (
-        <p>No medicines available</p>
+        <p>{searchQuery ? 'No matching medicines found.' : 'No medicines available'}</p>
       )}
 
       {/* Pagination */}
@@ -172,17 +122,17 @@ function Medicines() {
         <div className="pagination">
           <button
             type="button"
-            onClick={() => setCurrentPage(currentPage - 1)}
+            onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
             disabled={currentPage === 1}
           >
             Previous
           </button>
-          <span>Page {currentPage}</span>
+          <span>Page {pageCount === 0 ? 0 : currentPage} of {pageCount}</span>
           <button
             type="button"
             onClick={() => setCurrentPage(currentPage + 1)}
             disabled={
-              currentPage === Math.ceil(filteredMedicines.length / itemsPerPage) ||
+              currentPage >= pageCount ||
               filteredMedicines.length === 0
             }
           >
@@ -195,7 +145,3 @@ function Medicines() {
 }
 
 export default Medicines;
-
-
-
-  
