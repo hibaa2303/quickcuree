@@ -99,7 +99,7 @@ function createApp({ db, jwtSecret, logger = console } = {}) {
   const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:3001',
-    'https://quickcure.netlify.app',
+    'https://quickcure-a.netlify.app',
   ];
 
   app.use(cors({ origin: allowedOrigins, methods: ['GET', 'POST', 'PUT', 'DELETE'], credentials: true }));
